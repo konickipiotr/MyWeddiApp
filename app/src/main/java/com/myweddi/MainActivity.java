@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 ResponseEntity<User> response = restTemplate.exchange(params[0], HttpMethod.GET, new HttpEntity<Object>(requestHeaders), User.class);
                 if(response.getStatusCode() == HttpStatus.OK){
                     User user = response.getBody();
+                    Settings.user = user;
                     Log.i("XXXXXXX", user.toString());
                     startActivity(new Intent(MainActivity.this, GuestHome.class));
                 }else{
