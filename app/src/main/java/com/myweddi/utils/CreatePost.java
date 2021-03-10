@@ -117,7 +117,8 @@ public class CreatePost extends AppCompatActivity {
             }
 
             Log.i("XXXXXX", jsonObject);
-            HttpEntity<String> request = new HttpEntity<String>(jsonObject, requestHeaders);
+            //HttpEntity<String> request = new HttpEntity<String>(jsonObject, requestHeaders);
+            HttpEntity<Post> request = new HttpEntity<Post>(post[0], requestHeaders);
             //ResponseEntity<Long> result = restTemplate.postForEntity(path, request, Long.class);
 
             ResponseEntity<Long> response = restTemplate.exchange(path,

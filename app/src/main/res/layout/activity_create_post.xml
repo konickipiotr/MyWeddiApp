@@ -22,7 +22,7 @@
         <ImageView
             android:id="@+id/photo"
             android:layout_width="match_parent"
-            android:layout_height="267dp"
+            android:layout_height="176dp"
             tools:srcCompat="@tools:sample/avatars" />
 
         <Button

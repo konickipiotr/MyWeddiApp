@@ -1,11 +1,17 @@
 package com.myweddi.model.post;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import java.time.LocalDateTime;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Post {
     private Long id;
     private Long weddingid;
     private Long userid;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDateTime creationdate;
     private String description;
 

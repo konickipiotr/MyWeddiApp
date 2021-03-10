@@ -63,7 +63,8 @@ public class CustomListview extends ArrayAdapter<String> {
         List<Photo> photos = postlist.get(position).getPhotos();
         if(photos != null && !photos.isEmpty()){
             if(photos.get(0) != null && !photos.isEmpty()){
-                String path = "http://80.211.245.217:8081" + photos.get(0).getWebAppPath();
+                //String path = "http://80.211.245.217:8081" + photos.get(0).getWebAppPath();
+                String path = "http://10.0.2.2:8081" + photos.get(0).getWebAppPath();
                 Picasso.get().load(path).into(viewHolder.ivw);
             }
 
@@ -71,17 +72,20 @@ public class CustomListview extends ArrayAdapter<String> {
         //Picasso.get().load(postlist.get(position).getPhotos().get(0).getWebAppPath()).into(viewHolder.ivw);
         viewHolder.tvw1.setText(postlist.get(position).getUsername());
         viewHolder.tvw2.setText(postlist.get(position).getPostdate());
+        viewHolder.tvw3.setText(postlist.get(position).getDescription());
         return r;
     }
 
     class ViewHolder {
         TextView tvw1;
         TextView tvw2;
+        TextView tvw3;
         ImageView ivw;
 
         public ViewHolder(View view) {
             this.tvw1 = (TextView) view.findViewById(R.id.posttitle);
             this.tvw2 = (TextView) view.findViewById(R.id.date);
+            this.tvw3 = (TextView) view.findViewById(R.id.description);
             this.ivw = (ImageView) view.findViewById(R.id.imageView);
         }
 
