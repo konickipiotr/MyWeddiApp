@@ -32,7 +32,7 @@
             android:text="Zrob zdjęcie" />
 
         <EditText
-            android:id="@+id/editTextTextMultiLine"
+            android:id="@+id/postDescription"
             android:layout_width="match_parent"
             android:layout_height="226dp"
             android:ems="10"

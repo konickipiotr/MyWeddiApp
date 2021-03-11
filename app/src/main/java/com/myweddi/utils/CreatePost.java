@@ -12,9 +12,11 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,6 +26,7 @@ import com.myweddi.MainActivity;
 import com.myweddi.R;
 import com.myweddi.model.ListWrapper;
 import com.myweddi.model.post.Post;
+import com.myweddi.roles.guest.GuestHome;
 import com.myweddi.settings.Settings;
 import com.myweddi.view.PostView;
 
@@ -40,6 +43,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -48,6 +54,10 @@ import java.util.List;
 public class CreatePost extends AppCompatActivity {
     ImageView photo;
     Button bTakePhoto, bcreatePost;
+    EditText postDescription;
+    Bitmap bitmap;
+    String encodedString;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,10 +85,16 @@ public class CreatePost extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Post post = new Post(2l, Settings.user.getId(), LocalDateTime.now(), "elo elo to opis z androida");
+                Post post = new Post();
+                post.setUserid(Settings.user.getId());
+                post.setCreationdate(LocalDateTime.now());
+                postDescription = (EditText)findViewById(R.id.postDescription);
+                post.setDescription(postDescription.getText().toString());
+                post.setWeddingid(Settings.user.getWeddingid());
 
                 AddPostTask addPostTask = new AddPostTask();
                 addPostTask.execute(post);
+                startActivity(new Intent(CreatePost.this, GuestHome.class));
             }
         });
 
@@ -89,7 +105,7 @@ public class CreatePost extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 100){
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            bitmap = (Bitmap) data.getExtras().get("data");
             photo.setImageBitmap(bitmap);
         }
     }
@@ -108,23 +124,28 @@ public class CreatePost extends AppCompatActivity {
 
             String path = Settings.server_url + "api/post";
 
-            ObjectMapper mapper = new ObjectMapper();
-            String jsonObject = "";
-            try {
-                jsonObject = mapper.writeValueAsString(post);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-
-            Log.i("XXXXXX", jsonObject);
-            //HttpEntity<String> request = new HttpEntity<String>(jsonObject, requestHeaders);
             HttpEntity<Post> request = new HttpEntity<Post>(post[0], requestHeaders);
-            //ResponseEntity<Long> result = restTemplate.postForEntity(path, request, Long.class);
 
             ResponseEntity<Long> response = restTemplate.exchange(path,
                     HttpMethod.POST,
                     request,
                     Long.class);
+
+
+            LinkedMultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream);
+            byte[] byte_arr = stream.toByteArray();
+            encodedString = Base64.encodeToString(byte_arr, 0);
+            body.add("images", byte_arr);
+
+            path = Settings.server_url + "api/post/" + Settings.user.getId() + "/" + response.getBody();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+            headers.setAuthorization(authHeader);
+            HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+            restTemplate.postForObject(path, requestEntity, String.class);
+
 
             return null;
         }
