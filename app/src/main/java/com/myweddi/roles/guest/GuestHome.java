@@ -57,11 +57,11 @@ public class GuestHome extends AppCompatActivity {
         String path = Settings.server_url + "api/post/2/1";
         lp.execute(path);
 
-        if(ContextCompat.checkSelfPermission(GuestHome.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(GuestHome.this, new String[]{
-                    Manifest.permission.CAMERA
-            }, 100);
-        }
+//        if(ContextCompat.checkSelfPermission(GuestHome.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+//            ActivityCompat.requestPermissions(GuestHome.this, new String[]{
+//                    Manifest.permission.CAMERA
+//            }, 100);
+//        }
 
         bAddPost.setOnClickListener(new View.OnClickListener() {
             @Override

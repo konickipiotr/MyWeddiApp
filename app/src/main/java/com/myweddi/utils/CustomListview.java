@@ -5,7 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,8 +18,10 @@ import androidx.annotation.Nullable;
 
 import com.myweddi.R;
 import com.myweddi.model.Photo;
+import com.myweddi.model.post.Comment;
 import com.myweddi.roles.guest.GuestHome;
 import com.myweddi.settings.Settings;
+import com.myweddi.view.CommentView;
 import com.myweddi.view.PostView;
 import com.squareup.picasso.Picasso;
 
@@ -40,7 +46,7 @@ public class CustomListview extends ArrayAdapter<String> {
 //    }
 
     public CustomListview(Activity context, List<PostView> postlist, List<String> titles) {
-        super(context, R.layout.listview_layout, titles);
+        super(context, R.layout.mini_post, titles);
         this.postlist = postlist;
         this.context = context;
     }
@@ -52,7 +58,7 @@ public class CustomListview extends ArrayAdapter<String> {
         ViewHolder viewHolder = null;
         if(r == null){
             LayoutInflater inflater = context.getLayoutInflater();
-            r = inflater.inflate(R.layout.listview_layout, null, true);
+            r = inflater.inflate(R.layout.mini_post, null, true);
             viewHolder = new ViewHolder(r);
             r.setTag(viewHolder);
         }
@@ -64,29 +70,76 @@ public class CustomListview extends ArrayAdapter<String> {
         if(photos != null && !photos.isEmpty()){
             if(photos.get(0) != null && !photos.isEmpty()){
                 //String path = "http://80.211.245.217:8081" + photos.get(0).getWebAppPath();
-                String path = "http://10.0.2.2:8081" + photos.get(0).getWebAppPath();
-                Picasso.get().load(path).into(viewHolder.ivw);
+                String path =  "http://10.0.2.2:8081" + photos.get(0).getWebAppPath();
+                Picasso.get().load(path).into(viewHolder.photo1);
             }
 
         }
         //Picasso.get().load(postlist.get(position).getPhotos().get(0).getWebAppPath()).into(viewHolder.ivw);
-        viewHolder.tvw1.setText(postlist.get(position).getUsername());
-        viewHolder.tvw2.setText(postlist.get(position).getPostdate());
-        viewHolder.tvw3.setText(postlist.get(position).getDescription());
+        viewHolder.userName.setText(postlist.get(position).getUsername());
+        viewHolder.postdate.setText(postlist.get(position).getPostdate());
+        viewHolder.textContent.setText(postlist.get(position).getDescription());
+
+        List<CommentView> comments = postlist.get(position).getComments();
+        viewHolder.commentNum.setText(Integer.toString(comments.size()));
+
+        if(comments.isEmpty()){
+            viewHolder.firstComment.setVisibility(View.GONE);
+        }
+        else {
+            CommentView cv = comments.get(0);
+
+            Picasso.get().load(cv.getUserphoto()).into(viewHolder.cProfilPhoto);
+            viewHolder.userCom.setText(cv.getUsername());
+            viewHolder.comentData.setText(cv.getPostdate());
+            viewHolder.commentContent.setText(cv.getContent());
+        }
         return r;
     }
 
     class ViewHolder {
-        TextView tvw1;
-        TextView tvw2;
-        TextView tvw3;
-        ImageView ivw;
+        TextView userName;
+        TextView postdate;
+        ImageButton removePost;
+        Button morePhoto;
+
+        ImageView photo1;
+        TextView textContent;
+
+        TextView starNum;
+        ImageButton addStar;
+        TextView commentNum;
+
+        ImageView cProfilPhoto;
+        TextView userCom;
+        TextView comentData;
+        TextView commentContent;
+
+        EditText newComment;
+        ImageButton addComment;
+
+        LinearLayout firstComment;
 
         public ViewHolder(View view) {
-            this.tvw1 = (TextView) view.findViewById(R.id.posttitle);
-            this.tvw2 = (TextView) view.findViewById(R.id.date);
-            this.tvw3 = (TextView) view.findViewById(R.id.description);
-            this.ivw = (ImageView) view.findViewById(R.id.imageView);
+            this.firstComment = (LinearLayout) view.findViewById(R.id.firstComment);
+            this.userName = (TextView) view.findViewById(R.id.userName);
+            this.postdate = (TextView) view.findViewById(R.id.postdate);
+            this.textContent = (TextView) view.findViewById(R.id.textContent);
+            this.starNum = (TextView) view.findViewById(R.id.starNum);
+            this.commentNum = (TextView) view.findViewById(R.id.commentNum);
+            this.userCom = (TextView) view.findViewById(R.id.userCom);
+            this.comentData = (TextView) view.findViewById(R.id.comentData);
+            this.commentContent = (TextView) view.findViewById(R.id.commentContent);
+
+            this.morePhoto = (Button) view.findViewById(R.id.morePhoto);
+
+            this.removePost = (ImageButton) view.findViewById(R.id.removePost);
+            this.addStar = (ImageButton) view.findViewById(R.id.addStar);
+            this.addComment = (ImageButton) view.findViewById(R.id.addComment);
+
+            this.photo1 = (ImageView) view.findViewById(R.id.photo1);
+            this.cProfilPhoto = (ImageView) view.findViewById(R.id.cProfilPhoto);
+            this.newComment = (EditText) view.findViewById(R.id.newComment);
         }
 
     }
