@@ -43,11 +43,13 @@ public class GuestHome extends AppCompatActivity {
     ListView listView;
     Button bAddPost;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guest_home);
+
 
         bAddPost = (Button) findViewById(R.id.bAddPostg);
 
