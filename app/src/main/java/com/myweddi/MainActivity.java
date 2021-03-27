@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 if(response.getStatusCode() == HttpStatus.OK){
                     User user = response.getBody();
                     Settings.user = user;
+                    Settings.weddingid = user.getWeddingid();
                     Log.i("XXXXXXX", user.toString());
                     startActivity(new Intent(MainActivity.this, GuestHome.class));
                 }else{

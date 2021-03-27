@@ -1,5 +1,8 @@
 package com.myweddi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Host {
     private Long id;
     private String bridefirstname;
@@ -17,6 +20,7 @@ public class Host {
 
     public Host(){
         this.firstname = "Państow Młodzi";
+        this.lastname = "";
         this.role = "HOST";
     }
 

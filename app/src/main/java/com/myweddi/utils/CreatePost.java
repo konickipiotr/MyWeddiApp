@@ -23,14 +23,10 @@ import com.myweddi.model.post.Post;
 import com.myweddi.roles.guest.GuestHome;
 import com.myweddi.settings.Settings;
 
-import org.springframework.http.HttpAuthentication;
-import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -79,6 +75,9 @@ public class CreatePost extends AppCompatActivity {
                 post.setDescription(postDescription.getText().toString());
                 post.setWeddingid(Settings.user.getWeddingid());
 
+                if(bitmap == null && (post.getDescription() == null || post.getDescription().isEmpty()))
+                    return;
+
                 AddPostTask addPostTask = new AddPostTask();
                 addPostTask.execute(post);
                 startActivity(new Intent(CreatePost.this, GuestHome.class));
@@ -99,33 +98,29 @@ public class CreatePost extends AppCompatActivity {
         @Override
         protected Void doInBackground(Post... post) {
 
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            HttpAuthentication authHeader = new HttpBasicAuthentication(Settings.username,Settings.passoword);
+            RequestUtils requestUtils = new RequestUtils();
+            RestTemplate restTemplate = requestUtils.getRestTemplate();
+            HttpHeaders requestHeaders = requestUtils.getRequestHeaders();
 
-            HttpHeaders header1 = new HttpHeaders();
-            header1.setAuthorization(authHeader);
-            header1.setContentType(MediaType.APPLICATION_JSON);
 
             String path = Settings.server_url + "api/post";
-            HttpEntity<Post> request1 = new HttpEntity<Post>(post[0], header1);
+            HttpEntity<Post> request1 = new HttpEntity<Post>(post[0], requestHeaders);
             ResponseEntity<Long> response = restTemplate.exchange(path,
                     HttpMethod.POST,
                     request1,
                     Long.class);
 
+            if(bitmap == null)
+                return null;
+
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream);
             byte[] bitmapdata = stream.toByteArray();
 
-            HttpHeaders header2 = new HttpHeaders();
-            header2.setAuthorization(authHeader);
-            header2.add("Accept","application/json");
-            header2.setContentType(MediaType.APPLICATION_JSON);
-
             MultiValueMap<String, Object> body2 = new LinkedMultiValueMap<>();
             body2.add("images", Base64.encodeToString(bitmapdata, Base64.NO_WRAP));
 
+            HttpHeaders header2 = requestUtils.getRequestHeaders();
             HttpEntity<MultiValueMap<String, Object>> request2 = new HttpEntity<>(body2, header2);
             path = Settings.server_url + "api/post/" + Settings.user.getId() + "/" + response.getBody();
             ResponseEntity<Long> response2 = restTemplate
@@ -133,4 +128,6 @@ public class CreatePost extends AppCompatActivity {
             return null;
         }
     }
+
+
 }

@@ -16,6 +16,13 @@ public class Comment {
         this.creationdate = creationdate;
     }
 
+    public Comment(Long postid, Long userid, String content) {
+        this.postid = postid;
+        this.userid = userid;
+        this.content = content;
+        this.creationdate = creationdate;
+    }
+
     public Comment() {
     }
 
