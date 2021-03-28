@@ -18,7 +18,7 @@
     <LinearLayout
         android:id="@+id/button_layout"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="wrap_content"
         android:background="#0FFFFFFF"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:height="20dp"
+            android:height="100dp"
             android:fontFamily="casual"
             android:text="Check"
             android:textColor="#FFEB3B"
