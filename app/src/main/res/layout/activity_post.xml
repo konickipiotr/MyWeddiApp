@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".roles.guest.GuestInfo">
+
+        <TextView
+            android:id="@+id/textheader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#C1A7B8"
+            android:text="WeddiApp"
+            android:textAlignment="center"
+            android:textSize="28sp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/hostsPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="299dp"
+            tools:srcCompat="@drawable/img_20170603_123614" />
+
+        <ImageView
+            android:id="@+id/churchPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="196dp"
+            android:paddingBottom="20"
+            tools:srcCompat="@drawable/str" />
+
+        <ImageView
+            android:id="@+id/partyHousePhoto"
+            android:layout_width="match_parent"
+            android:layout_height="158dp"
+            android:paddingBottom="20"
+            tools:srcCompat="@drawable/por" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:background="#C1A7B8"
+            android:text="Zdjęcia które zrobiłam wam w kościele"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="25dp" />
+
+
+    </LinearLayout>
+</ScrollView>
