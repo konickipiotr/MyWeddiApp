@@ -60,7 +60,7 @@
                         android:textStyle="bold|italic" />
 
                     <TextView
-                        android:id="@+id/comentData"
+                        android:id="@+id/commentDate"
                         android:layout_width="126dp"
                         android:layout_height="19dp"
                         android:layout_marginEnd="5dp"
@@ -84,9 +84,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0"
                 android:background="#E0DDE6"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:srcCompat="@android:drawable/ic_menu_delete" />
 
         </LinearLayout>
 
     </LinearLayout>
+</LinearLayout>

@@ -33,7 +33,7 @@
             android:layout_weight="1"
             android:height="100dp"
             android:fontFamily="casual"
-            android:text="Check"
+            android:text="Nowy Post"
             android:textColor="#FFEB3B"
             android:textSize="36sp"
             android:textStyle="bold" />

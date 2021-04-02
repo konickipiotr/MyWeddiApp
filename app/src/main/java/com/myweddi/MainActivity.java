@@ -50,30 +50,15 @@ public class MainActivity extends AppCompatActivity {
         Settings.username = eLogin.getText().toString();
         Settings.passoword = ePassword.getText().toString();
 
-        String path= Settings.server_url + "api/user";
-        //String paht= "http://80.211.245.217:8080/login";
+        String path= Settings.server_url + "/api/user";
         LoginTask loginTask = new LoginTask();
         loginTask.execute(path);
-
-
     }
 
     class LoginTask extends AsyncTask<String, Void, Void> {
 
         @Override
         protected Void doInBackground(String... params) {
-//            RestTemplate rest = new RestTemplate();
-//            rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-//            List<ClientHttpRequestInterceptor> list = new ArrayList<>();
-//            ChexInterceptor cheint = new ChexInterceptor(username, password);
-//
-//            list.add(cheint);
-//            rest.setInterceptors(list);
-//
-//            ResponseEntity<PostListWraper> response = rest.getForEntity(params[0], PostListWraper.class);
-
-
-
             HttpAuthentication authHeader = new HttpBasicAuthentication(Settings.username,Settings.passoword);
             HttpHeaders requestHeaders = new HttpHeaders();
             requestHeaders.setAuthorization(authHeader);
@@ -88,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
                     User user = response.getBody();
                     Settings.user = user;
                     Settings.weddingid = user.getWeddingid();
-                    Log.i("XXXXXXX", user.toString());
                     startActivity(new Intent(MainActivity.this, GuestHome.class));
                 }else{
                     Settings.username = "";
@@ -98,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
             //ResponseEntity<PostListWraper> response = restTemplate.exchange(params[0], HttpMethod.GET, new HttpEntity<Object>(requestHeaders), PostListWraper.class);
-
-
             return null;
         }
     }

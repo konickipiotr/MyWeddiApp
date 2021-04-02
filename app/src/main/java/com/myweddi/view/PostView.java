@@ -26,6 +26,9 @@ public class PostView {
     private String postdate;
     private String posttime;
 
+    private boolean isLiked;
+    private int likeNumber;
+
     private List<Photo> photos = new ArrayList<>();
     private List<CommentView> comments = new ArrayList<>();
 
@@ -133,5 +136,21 @@ public class PostView {
 
     public void setComments(List<CommentView> comments) {
         this.comments = comments;
+    }
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
+    }
+
+    public int getLikeNumber() {
+        return likeNumber;
+    }
+
+    public void setLikeNumber(int likeNumber) {
+        this.likeNumber = likeNumber;
     }
 }

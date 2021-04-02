@@ -54,7 +54,7 @@
             android:textColor="#fff" />
 
         <ImageButton
-            android:id="@+id/removePost"
+            android:id="@+id/removePost3"
             android:layout_width="wrap_content"
             android:layout_height="46dp"
             android:layout_weight="1"
@@ -67,6 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
+            android:visibility="gone"
             tools:visibility="gone" />
     </LinearLayout>
 
@@ -99,7 +100,7 @@
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:text="Smieszie wygladacie na tym zdjęciu, nie mogłem się oprzeć aby go nie dodać :D <3 Super zabawa!" />
+            android:text="" />
 
     </LinearLayout>
 
@@ -200,7 +201,7 @@
                         android:textStyle="bold|italic" />
 
                     <TextView
-                        android:id="@+id/comentData"
+                        android:id="@+id/commentDate"
                         android:layout_width="126dp"
                         android:layout_height="19dp"
                         android:layout_marginEnd="5dp"
@@ -224,7 +225,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0"
                 android:background="#E0DDE6"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:srcCompat="@android:drawable/ic_menu_delete" />
 
         </LinearLayout>

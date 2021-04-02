@@ -1,8 +1,8 @@
 package com.myweddi.utils;
 
 import android.app.Activity;
-import android.os.AsyncTask;
-import android.util.Log;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,38 +16,24 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.myweddi.R;
+import com.myweddi.async.AddComment;
 import com.myweddi.model.Photo;
 import com.myweddi.model.post.Comment;
+import com.myweddi.roles.guest.PostActivity;
 import com.myweddi.settings.Settings;
 import com.myweddi.view.CommentView;
 import com.myweddi.view.PostView;
 import com.squareup.picasso.Picasso;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.web.client.RestTemplate;
-import org.w3c.dom.Text;
 
 import java.util.List;
 
 public class CustomListview extends ArrayAdapter<String> {
-
-
-//    private List<String> titles;
-//    private List<String> date;
-//    private List<String> imgurl;
-
     private Activity context;
     private List<PostView> postlist;
-//    public CustomListview(Activity context, List<String> titles, List<String> date, List<String> imgurl) {
-//        super(context, R.layout.listview_layout, titles);
-//        this.context = context;
-//        this.titles = titles;
-//        this.date = date;
-//        this.imgurl = imgurl;
-//    }
 
     public CustomListview(Activity context, List<PostView> postlist, List<String> titles) {
         super(context, R.layout.mini_post, titles);
@@ -71,25 +57,37 @@ public class CustomListview extends ArrayAdapter<String> {
             viewHolder = (ViewHolder) r.getTag();
         }
 
-        List<Photo> photos = postlist.get(position).getPhotos();
+        PostView postView = postlist.get(position);
+        List<Photo> photos = postView.getPhotos();
         if(photos != null && !photos.isEmpty()){
             if(photos.get(0) != null && !photos.isEmpty()){
                 //String path = "http://80.211.245.217:8081" + photos.get(0).getWebAppPath();
-                String path =  "http://10.0.2.2:8081" + photos.get(0).getWebAppPath();
+                String path =  Settings.server_url + photos.get(0).getWebAppPath();
                 Picasso.get().load(path).into(viewHolder.photo1);
             }
 
         }else{
             viewHolder.photo1.setVisibility(View.GONE);
         }
-        //Picasso.get().load(postlist.get(position).getPhotos().get(0).getWebAppPath()).into(viewHolder.ivw);
-        viewHolder.userName.setText(postlist.get(position).getUsername());
-        viewHolder.postdate.setText(postlist.get(position).getPostdate());
-        viewHolder.textContent.setText(postlist.get(position).getDescription());
-        viewHolder.postid.setText(postlist.get(position).getId().toString());
-        //viewHolder.postid = postlist.get(position).getId();
 
-        List<CommentView> comments = postlist.get(position).getComments();
+        viewHolder.userName.setText(postView.getUsername());
+        viewHolder.postdate.setText(postView.getPostdate());
+        viewHolder.textContent.setText(postView.getDescription());
+        viewHolder.postid.setText(postView.getId().toString());
+        if(postView.getUserid().equals(Settings.user.getId())){
+            viewHolder.removePost.setVisibility(View.VISIBLE);
+            viewHolder.removePost.setOnClickListener(new RemovePostListener(postView.getId(), context));
+        }
+
+        if(postView.isLiked()){
+            viewHolder.addStar.setImageDrawable(ContextCompat.getDrawable(context.getApplicationContext(),android.R.drawable.btn_star_big_on));
+        }else{
+            viewHolder.addStar.setImageDrawable(ContextCompat.getDrawable(context.getApplicationContext(),android.R.drawable.btn_star_big_off));
+        }
+        viewHolder.starNum.setText(postView.getLikeNumber());
+
+
+        List<CommentView> comments = postView.getComments();
         viewHolder.commentNum.setText(Integer.toString(comments.size()));
 
 
@@ -97,12 +95,16 @@ public class CustomListview extends ArrayAdapter<String> {
             viewHolder.firstComment.setVisibility(View.GONE);
         }
         else {
-            CommentView cv = comments.get(0);
+            CommentView cv = comments.get(comments.size() - 1);
 
             Picasso.get().load(cv.getUserphoto()).into(viewHolder.cProfilPhoto);
             viewHolder.userCom.setText(cv.getUsername());
             viewHolder.comentData.setText(cv.getPostdate());
             viewHolder.commentContent.setText(cv.getContent());
+            if(cv.getUserid().equals(Settings.user.getId())){
+                viewHolder.removePost.setVisibility(View.VISIBLE);
+                viewHolder.removePost.setOnClickListener(new CommentToRemoveListener(cv.getId(), context));
+            }
         }
 
         viewHolder.addComment.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +122,17 @@ public class CustomListview extends ArrayAdapter<String> {
                 context.finish();
                 context.startActivity(context.getIntent());
 
+            }
+        });
+
+        viewHolder.morePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView sPostId = (TextView) context.findViewById(R.id.postid);
+                Long id = Long.valueOf(sPostId.getText().toString());
+                Intent postintent = new Intent(context, PostActivity.class);
+                postintent.putExtra("postid", id);
+                context.startActivity(postintent);
             }
         });
 
@@ -164,13 +177,13 @@ public class CustomListview extends ArrayAdapter<String> {
             this.starNum = (TextView) view.findViewById(R.id.starNum);
             this.commentNum = (TextView) view.findViewById(R.id.commentNum);
             this.userCom = (TextView) view.findViewById(R.id.userCom);
-            this.comentData = (TextView) view.findViewById(R.id.comentData);
+            this.comentData = (TextView) view.findViewById(R.id.commentDate);
             this.commentContent = (TextView) view.findViewById(R.id.commentContent);
             this.commentContent = (TextView) view.findViewById(R.id.commentContent);
 
             this.morePhoto = (Button) view.findViewById(R.id.morePhoto);
 
-            this.removePost = (ImageButton) view.findViewById(R.id.removePost);
+            this.removePost = (ImageButton) view.findViewById(R.id.removePost3);
             this.addStar = (ImageButton) view.findViewById(R.id.addStar);
             this.addComment = (ImageButton) view.findViewById(R.id.addComment);
 
@@ -181,17 +194,4 @@ public class CustomListview extends ArrayAdapter<String> {
         }
     }
 
-    class AddComment extends AsyncTask<Comment, Void, Void> {
 
-        @Override
-        protected Void doInBackground(Comment... comments) {
-            Comment comment = comments[0];
-            RequestUtils requestUtils = new RequestUtils();
-            RestTemplate restTemplate = requestUtils.getRestTemplate();
-            HttpHeaders requestHeaders = requestUtils.getRequestHeaders();
-
-            String path = Settings.server_url + "api/post/addcomment";
-            restTemplate.postForEntity(path, new HttpEntity<Comment>(comment, requestHeaders), Long.class);
-            return null;
-        }
-}

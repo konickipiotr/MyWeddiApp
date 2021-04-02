@@ -70,7 +70,7 @@ public class GuestHome extends AppCompatActivity {
 
 
         FetchPosts lp = new FetchPosts();
-        String path = Settings.server_url + "api/post/2/1";
+        String path = Settings.server_url + "/api/post/2/1";
         lp.execute(path);
 
 //        if(ContextCompat.checkSelfPermission(GuestHome.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){

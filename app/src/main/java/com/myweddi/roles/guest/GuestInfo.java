@@ -137,7 +137,7 @@ public class GuestInfo extends AppCompatActivity {
             RestTemplate restTemplate = requestUtils.getRestTemplate();
             HttpHeaders requestHeaders = requestUtils.getRequestHeaders();
 
-            String path = Settings.server_url + "api/churchinfo/" + Settings.weddingid;
+            String path = Settings.server_url + "/api/churchinfo/" + Settings.weddingid;
             ResponseEntity<ChurchInfo> response = restTemplate.exchange(path,
                     HttpMethod.GET,
                     new HttpEntity<Object>(requestHeaders),
@@ -145,14 +145,14 @@ public class GuestInfo extends AppCompatActivity {
 
             ChurchInfo churchInfo = response.getBody();
 
-            path = Settings.server_url + "api/weddinginfo/" + Settings.weddingid;
+            path = Settings.server_url + "/api/weddinginfo/" + Settings.weddingid;
             ResponseEntity<WeddingInfo> response2 = restTemplate.exchange(path,
                     HttpMethod.GET,
                     new HttpEntity<Object>(requestHeaders),
                     WeddingInfo.class);
             WeddingInfo weddingInfo = response2.getBody();
 
-            path = Settings.server_url + "api/user/host";
+            path = Settings.server_url + "/api/user/host";
             ResponseEntity<Host> response3 = restTemplate.postForEntity(path,
                     new HttpEntity<Long>(Settings.weddingid, requestHeaders),
                     Host.class);
