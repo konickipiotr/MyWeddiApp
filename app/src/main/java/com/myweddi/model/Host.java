@@ -15,13 +15,18 @@ public class Host {
     private String groomphone;
     private String firstname;
     private String lastname;
-    private String photo;
-    private String role;
+    private String realPath;
+    private String webAppPath;
 
     public Host(){
         this.firstname = "Państow Młodzi";
         this.lastname = "";
-        this.role = "HOST";
+        this.webAppPath = "img/user.png";
+    }
+
+    public Host(Long id){
+        this();
+        this.id = id;
     }
 
     public String getName(){
@@ -124,19 +129,20 @@ public class Host {
         this.lastname = lastname;
     }
 
-    public String getPhoto() {
-        return photo;
+    public String getRealPath() {
+        return realPath;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setRealPath(String realPath) {
+        this.realPath = realPath;
     }
 
-    public String getRole() {
-        return role;
+    public String getWebAppPath() {
+        return webAppPath;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setWebAppPath(String webAppPath) {
+        this.webAppPath = webAppPath;
     }
+
 }

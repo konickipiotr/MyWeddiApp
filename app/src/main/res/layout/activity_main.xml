@@ -1,122 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:background="#FDEFEF"
-    tools:context=".MainActivity" >
+    android:background="@color/backgroundColor"
+    android:fillViewport="true">
 
-    <EditText
-        android:id="@+id/passwordInput"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/bSignIn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="11" />
+        android:orientation="vertical"
+        android:padding="10dip">
 
-    <EditText
-        android:id="@+id/loginInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="176dp"
-        android:background="#DF3939"
-        android:backgroundTint="#FFFFFF"
-        android:ems="10"
-        android:hint="login"
-        android:inputType="textPersonName"
-        android:text="sg"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/passwordInput"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.794" />
+        <ImageView
+            android:id="@+id/LogoImg"
+            android:layout_width="wrap_content"
+            android:layout_height="118dp"
+            app:srcCompat="@drawable/log" />
 
-    <Button
-        android:id="@+id/bSignIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="280dp"
-        android:width="150dp"
-        android:height="60dp"
-        android:onClick="signIn"
-        android:text="Zaloguj"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        <ImageView
+            android:id="@+id/heartImg"
+            android:layout_width="109dp"
+            android:layout_height="107dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            app:srcCompat="@drawable/heart" />
 
-    <Button
-        android:id="@+id/bSignIn3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:width="250dp"
-        android:height="15dp"
-        android:backgroundTint="#B88AA5"
-        android:onClick="signIn"
-        android:text="Zarejestruj"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/main_error_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="#E61919"
+            android:textSize="18sp"
+            android:visibility="gone" />
 
-    <Button
-        android:id="@+id/bSignIn4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
-        android:width="250dp"
-        android:height="15dp"
-        android:backgroundTint="#B88AA5"
-        android:onClick="signIn"
-        android:text="Zresetuj hasło"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/main_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="#047800"
+            android:textSize="18sp"
+            android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="183dp"
-        tools:layout_editor_absoluteY="254dp"
-        tools:text="LOGIIN" />
+        <TextView
+            android:id="@+id/loginLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textSize="24sp"/>
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="183dp"
-        tools:layout_editor_absoluteY="312dp"
-        tools:text="HASŁO" />
+        <EditText
+            android:id="@+id/loginInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#DF3939"
+            android:backgroundTint="#FFFFFF"
+            android:ems="10"
+            android:hint="login"
+            android:inputType="textPersonName"
+            android:padding="5dp"
+            android:text="sg"
+            android:textSize="30sp" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="109dp"
-        android:layout_height="107dp"
-        app:srcCompat="@drawable/heart"
-        tools:layout_editor_absoluteX="151dp"
-        tools:layout_editor_absoluteY="137dp" />
+        <TextView
+            android:id="@+id/passwordLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hasło:"
+            android:textSize="24sp" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/log"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-96dp" />
+        <EditText
+            android:id="@+id/passwordInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:padding="5dp"
+            android:textSize="30sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/bSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="30dp"
+            android:width="150dp"
+            android:height="70dp"
+            android:onClick="signIn"
+            android:text="Zaloguj" />
+
+        <Button
+            android:id="@+id/bRegistration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:width="250dp"
+            android:height="15dp"
+            android:backgroundTint="#B88AA5"
+            android:onClick="signIn"
+            android:text="Zarejestruj" />
+
+        <Button
+            android:id="@+id/bResetPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:width="250dp"
+            android:height="15dp"
+            android:backgroundTint="#B88AA5"
+            android:onClick="signIn"
+            android:text="Zresetuj hasło" />
+
+
+    </LinearLayout>
+</ScrollView>

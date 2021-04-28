@@ -1,25 +1,20 @@
-package com.myweddi.view;
+package com.myweddi.module.showpost.view;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.myweddi.model.User;
-import com.myweddi.model.post.Comment;
-
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
+import com.myweddi.module.showpost.model.Comment;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CommentView{
+
     private Long id;
     private Long postid;
     private Long userid;
     private String content;
-    //private LocalDateTime creationdate;
     private String username;
     private String userphoto;
-    private String role;
-
-    private String postdate;
-    private String posttime;
+    private String postdatetime;
+    private boolean myComment;
 
     public CommentView() {
     }
@@ -29,23 +24,9 @@ public class CommentView{
         this.postid = c.getPostid();
         this.userid = c.getUserid();
         this.content = c.getContent();
-        //this.creationdate = c.getCreationdate();
         this.username = user.getName();
-        this.userphoto = user.getPhoto();
-        this.role = user.getRole();
+        this.userphoto = user.getWebAppPath();
     }
-
-//    @Override
-//    public int compareTo(CommentView o) {
-//        if(this.creationdate.isAfter(o.getCreationdate()))
-//            return 1;
-//        else return 0;
-//    }
-
-//    public void covert() {
-//        this.postdate = this.creationdate.toLocalDate().toString();
-//        this.posttime = this.creationdate.toLocalTime().truncatedTo(ChronoUnit.MINUTES).toString();
-//    }
 
     public Long getId() {
         return id;
@@ -79,14 +60,6 @@ public class CommentView{
         this.content = content;
     }
 
-//    public LocalDateTime getCreationdate() {
-//        return creationdate;
-//    }
-//
-//    public void setCreationdate(LocalDateTime creationdate) {
-//        this.creationdate = creationdate;
-//    }
-
     public String getUsername() {
         return username;
     }
@@ -103,27 +76,19 @@ public class CommentView{
         this.userphoto = userphoto;
     }
 
-    public String getRole() {
-        return role;
+    public String getPostdatetime() {
+        return postdatetime;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setPostdatetime(String postdatetime) {
+        this.postdatetime = postdatetime;
     }
 
-    public String getPostdate() {
-        return postdate;
+    public boolean isMyComment() {
+        return myComment;
     }
 
-    public void setPostdate(String postdate) {
-        this.postdate = postdate;
-    }
-
-    public String getPosttime() {
-        return posttime;
-    }
-
-    public void setPosttime(String posttime) {
-        this.posttime = posttime;
+    public void setMyComment(boolean myComment) {
+        this.myComment = myComment;
     }
 }

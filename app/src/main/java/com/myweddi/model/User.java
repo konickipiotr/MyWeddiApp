@@ -4,19 +4,24 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
+
     private Long id;
     private String firstname;
     private String lastname;
-    private String photo;
+    private String realPath;
+    private String webAppPath;
     private String role;
     private Long weddingid;
+
+    public User() {
+    }
 
     public User(Host host) {
         this.id = host.getId();
         this.firstname = host.getFirstname();
         this.lastname = host.getLastname();
-        this.photo = host.getPhoto();
-        this.role = host.getRole();
+        this.realPath = host.getRealPath();
+        this.webAppPath = host.getWebAppPath();
         this.weddingid = this.id;
     }
 
@@ -24,27 +29,13 @@ public class User {
         this.id = guest.getId();
         this.firstname = guest.getFirstname();
         this.lastname = guest.getLastname();
-        this.photo = guest.getPhoto();
-        this.role = guest.getRole();
+        this.realPath = guest.getRealPath();
+        this.webAppPath = guest.getWebAppPath();
         this.weddingid = guest.getWeddingid();
     }
 
     public String getName(){
         return firstname + " " + lastname;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", photo='" + photo + '\'' +
-                ", role='" + role + '\'' +
-                '}';
-    }
-
-    public User() {
     }
 
     public Long getId() {
@@ -71,20 +62,20 @@ public class User {
         this.lastname = lastname;
     }
 
-    public String getPhoto() {
-        return photo;
+    public String getRealPath() {
+        return realPath;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setRealPath(String realPath) {
+        this.realPath = realPath;
     }
 
-    public String getRole() {
-        return role;
+    public String getWebAppPath() {
+        return webAppPath;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setWebAppPath(String webAppPath) {
+        this.webAppPath = webAppPath;
     }
 
     public Long getWeddingid() {
@@ -93,6 +84,14 @@ public class User {
 
     public void setWeddingid(Long weddingid) {
         this.weddingid = weddingid;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
 

@@ -1,4 +1,4 @@
-package com.myweddi.model.post;
+package com.myweddi.module.showpost.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -14,12 +14,14 @@ public class Post {
     @JsonSerialize(using = ToStringSerializer.class)
     private LocalDateTime creationdate;
     private String description;
+    private Posttype posttype;
 
-    public Post(Long weddingid, Long userid, LocalDateTime creationdate, String description) {
+    public Post(Long weddingid, Long userid, LocalDateTime creationdate, String description, Posttype posttype) {
         this.weddingid = weddingid;
         this.userid = userid;
         this.creationdate = creationdate;
         this.description = description;
+        this.posttype = posttype;
     }
 
     public Post() {
@@ -63,5 +65,13 @@ public class Post {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Posttype getPosttype() {
+        return posttype;
+    }
+
+    public void setPosttype(Posttype posttype) {
+        this.posttype = posttype;
     }
 }

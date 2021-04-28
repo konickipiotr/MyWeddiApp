@@ -1,13 +1,13 @@
-package com.myweddi.utils;
+package com.myweddi.module.showpost.listeners;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.View;
 
-import com.myweddi.model.post.Comment;
 import com.myweddi.roles.guest.GuestHome;
 import com.myweddi.settings.Settings;
+import com.myweddi.utils.RequestUtils;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -41,7 +41,7 @@ public class RemovePostListener implements View.OnClickListener {
             HttpHeaders requestHeaders = requestUtils.getRequestHeaders();
 
             String path = Settings.server_url + "/api/post/deletepost/" + params[0];
-            restTemplate.exchange(path, HttpMethod.DELETE, new HttpEntity<Comment>(requestHeaders), Long.class);
+            restTemplate.exchange(path, HttpMethod.DELETE, new HttpEntity<>(requestHeaders), Void.class);
             return null;
         }
     }

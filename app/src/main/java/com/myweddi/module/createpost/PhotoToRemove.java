@@ -1,4 +1,4 @@
-package com.myweddi.utils;
+package com.myweddi.module.createpost;
 
 import android.graphics.Color;
 import android.view.MotionEvent;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.myweddi.R;
+import com.myweddi.module.createpost.CreatePost;
 
 public class PhotoToRemove implements View.OnTouchListener {
 

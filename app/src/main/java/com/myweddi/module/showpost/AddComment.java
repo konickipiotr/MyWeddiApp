@@ -1,8 +1,8 @@
-package com.myweddi.async;
+package com.myweddi.module.showpost;
 
 import android.os.AsyncTask;
 
-import com.myweddi.model.post.Comment;
+import com.myweddi.module.showpost.model.Comment;
 import com.myweddi.settings.Settings;
 import com.myweddi.utils.RequestUtils;
 

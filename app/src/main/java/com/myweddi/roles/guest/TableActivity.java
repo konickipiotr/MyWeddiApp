@@ -4,19 +4,42 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.bumptech.glide.Glide;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myweddi.R;
+import com.myweddi.module.table.model.TablePlace;
+import com.myweddi.module.table.model.TableWrapper;
+import com.myweddi.settings.Settings;
+import com.myweddi.utils.MenuHandler;
+import com.myweddi.utils.OtherUtils;
+import com.myweddi.utils.RequestUtils;
+import com.myweddi.module.table.TableListAdapter;
+import com.squareup.picasso.Picasso;
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TableActivity extends AppCompatActivity {
 
-    ImageView imageView;
+    ImageView myProfilPhoto;
+    ImageView tableSchema;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +51,13 @@ public class TableActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 
-        imageView = (ImageView) findViewById(R.id.myprofilphoto);
-        Glide.with(this)
-                .load("https://fwcdn.pl/fpo/71/07/707107/7648804.3.jpg")
-                .circleCrop()
-                .into(imageView);
+        OtherUtils.setProfilePhoto(myProfilPhoto, this, TableActivity.this);
+
+
+        this.tableSchema = (ImageView) findViewById(R.id.tableImage);
+
+        TableAsync tableAsync = new TableAsync();
+        tableAsync.execute();
     }
 
     @Override
@@ -44,30 +69,55 @@ public class TableActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.bHome:
-                Log.i("Menu","Home");
-                this.finish();
-                startActivity(new Intent(TableActivity.this, GuestHome.class));
-                return true;
-            case R.id.bInfo:
-                Log.i("Menu","Info");
-                startActivity(new Intent(TableActivity.this, GuestInfo.class));
-                return true;
-            case R.id.bTable:
-                Log.i("Menu","Stoły");
-                startActivity(new Intent(TableActivity.this, TableActivity.class));
-                return true;
-            case R.id.bLogout:
-                Log.i("Menu","Wyloguj");
-                return true;
-            case R.id.bOptions:
-                Log.i("Menu","Opcje");
-                startActivity(new Intent(TableActivity.this, SettingActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        boolean menu = MenuHandler.menu(item, this, TableActivity.this);
+        if(!menu)
+            return super.onOptionsItemSelected(item);
+        return menu;
+    }
+
+    class TableAsync extends AsyncTask<Void,  Void, TableWrapper> {
+
+        @Override
+        protected TableWrapper doInBackground(Void... voids) {
+            RequestUtils requestUtils = new RequestUtils();
+            RestTemplate restTemplate = requestUtils.getRestTemplate();
+            HttpHeaders requestHeaders = requestUtils.getRequestHeaders();
+
+            String path = Settings.server_url + "/api/table/" + Settings.weddingid;
+            ResponseEntity<TableWrapper> response = restTemplate.exchange(
+                    path,
+                    HttpMethod.GET,
+                    new HttpEntity<Object>(requestHeaders),
+                    TableWrapper.class);
+
+            ObjectMapper mapper = new ObjectMapper();
+            TableWrapper tableWrapper = mapper.convertValue(response.getBody(), new TypeReference<TableWrapper>() {});
+            return  tableWrapper;
+        }
+
+        @Override
+        protected void onPostExecute(TableWrapper tableWrapper) {
+
+            String webAppPath = tableWrapper.getTables().getWebAppPath();
+            if(webAppPath != null && !webAppPath.isEmpty()){
+                Picasso.get().load(Settings.server_url + webAppPath)
+                        .into(tableSchema);
+            }else {
+                tableSchema.setVisibility(View.GONE);
+            }
+
+            ListView listView = (ListView) findViewById(R.id.tableListView);
+            TableListAdapter tableListAdapter = new TableListAdapter(TableActivity.this, tableWrapper.getTablePlaces(), getTitles(tableWrapper));
+            listView.setAdapter(tableListAdapter);
+        }
+
+        private List<String> getTitles(TableWrapper tableWrapper){
+            List<String> titles = new ArrayList<>();
+
+            for(TablePlace tp : tableWrapper.getTablePlaces()){
+                titles.add(tp.getUsername());
+            }
+            return titles;
         }
     }
 }

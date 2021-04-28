@@ -1,5 +1,14 @@
 <resources>
-    <string name="app_name"></string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">MyWeddi</string>
+
+    <string name="firstname">Imię</string>
+    <string name="lastname">Nazwisko</string>
+    <string name="email">email</string>
+    <string name="phone">phone</string>
+
+    <string name="reg_who_you_are">Kim jesteś?</string>
+    <string name="reg_who_hosts">Państwo Młodzi</string>
+    <string name="reg_who_guest">Gość</string>
+    <string name="reg_who_dj">Dj/Zespół</string>
+    <string name="reg_who_photographer">Fotograf</string>
 </resources>

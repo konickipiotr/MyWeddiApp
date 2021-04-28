@@ -10,11 +10,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,15 +20,18 @@ import com.bumptech.glide.Glide;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myweddi.R;
-import com.myweddi.async.AddComment;
+import com.myweddi.module.showpost.AddComment;
 import com.myweddi.model.Photo;
-import com.myweddi.model.post.Comment;
+import com.myweddi.module.showpost.model.Comment;
 import com.myweddi.settings.Settings;
-import com.myweddi.utils.PostCommentListView;
-import com.myweddi.utils.RemovePostListener;
+import com.myweddi.utils.ListUtils;
+import com.myweddi.module.showpost.PostCommentAdapter;
+import com.myweddi.module.showpost.listeners.RemovePostListener;
+import com.myweddi.utils.OtherUtils;
 import com.myweddi.utils.RequestUtils;
-import com.myweddi.view.CommentView;
-import com.myweddi.view.PostView;
+import com.myweddi.module.showpost.listeners.StarButtonListener;
+import com.myweddi.module.showpost.view.CommentView;
+import com.myweddi.module.showpost.view.PostView;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -42,7 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PostActivity extends AppCompatActivity {
-    private ImageView imageView;
+    private ImageView myProfilPhoto;
     private ImageButton addComment, removepost, btnStar;
     private EditText newComment;
     private Long postid;
@@ -57,16 +58,14 @@ public class PostActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
-        imageView = (ImageView) findViewById(R.id.myprofilphoto);
-        Glide.with(this)
-                .load("https://fwcdn.pl/fpo/71/07/707107/7648804.3.jpg")
-                .circleCrop()
-                .into(imageView);
+
+        OtherUtils.setProfilePhoto(myProfilPhoto, this, PostActivity.this);
 
         Intent intent = getIntent();
         postid = intent.getLongExtra("postid", -1);
 
         removepost.setOnClickListener(new RemovePostListener(postid, this));
+        btnStar.setOnClickListener(new StarButtonListener(this, postid, starNum));
 
 
         FetchPost post = new FetchPost();
@@ -149,8 +148,8 @@ public class PostActivity extends AppCompatActivity {
             PostPhotoListView postPhotoListView = new PostPhotoListView(PostActivity.this, postView.getPhotos(), getTitlesPhoto(postView));
             photoListView.setAdapter(postPhotoListView);
 
-            PostCommentListView postCommentListView = new PostCommentListView(PostActivity.this, postView.getComments(), getCommentTitle(postView));
-            commentListView.setAdapter(postCommentListView);
+            PostCommentAdapter postCommentAdapter = new PostCommentAdapter(PostActivity.this, postView.getComments(), getCommentTitle(postView));
+            commentListView.setAdapter(postCommentAdapter);
 
             ListUtils.setDynamicHeight(photoListView);
             ListUtils.setDynamicHeight(commentListView);
@@ -161,35 +160,14 @@ public class PostActivity extends AppCompatActivity {
                 removepost.setVisibility(View.GONE);
             }
 
-            if(postView.isLiked()){
+            if(postView.isWeddiLike()){
                 btnStar.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),android.R.drawable.btn_star_big_on));
             }else{
                 btnStar.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),android.R.drawable.btn_star_big_off));
             }
 
-            starNum.setText(postView.getLikeNumber());
+            starNum.setText(Integer.toString(postView.getLikeNumber()));
         }
     }
 
-
-    public static class ListUtils {
-        public static void setDynamicHeight(ListView mListView) {
-            ListAdapter mListAdapter = mListView.getAdapter();
-            if (mListAdapter == null) {
-                // when adapter is null
-                return;
-            }
-            int height = 0;
-            int desiredWidth = View.MeasureSpec.makeMeasureSpec(mListView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-            for (int i = 0; i < mListAdapter.getCount(); i++) {
-                View listItem = mListAdapter.getView(i, null, mListView);
-                listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-                height += listItem.getMeasuredHeight();
-            }
-            ViewGroup.LayoutParams params = mListView.getLayoutParams();
-            params.height = height + (mListView.getDividerHeight() * (mListAdapter.getCount() - 1));
-            mListView.setLayoutParams(params);
-            mListView.requestLayout();
-        }
-    }
 }

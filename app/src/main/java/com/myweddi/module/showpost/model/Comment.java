@@ -1,4 +1,4 @@
-package com.myweddi.model.post;
+package com.myweddi.module.showpost.model;
 
 import java.time.LocalDateTime;
 

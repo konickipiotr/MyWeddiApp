@@ -1,4 +1,4 @@
-package com.myweddi.utils;
+package com.myweddi.module.createpost;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,9 +23,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.myweddi.R;
-import com.myweddi.model.post.Post;
+import com.myweddi.module.showpost.model.Post;
+import com.myweddi.module.showpost.model.Posttype;
 import com.myweddi.roles.guest.GuestHome;
 import com.myweddi.settings.Settings;
+import com.myweddi.utils.RequestUtils;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -71,7 +73,7 @@ public class CreatePost extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, CAMERA_SRC);
+                startActivityForResult(intent, 100);
             }
         });
 
@@ -94,6 +96,7 @@ public class CreatePost extends AppCompatActivity {
                 postDescription = (EditText)findViewById(R.id.postDescription);
                 post.setDescription(postDescription.getText().toString());
                 post.setWeddingid(Settings.user.getWeddingid());
+                post.setPosttype(Posttype.LOCAL);
 
                 if(bitmapList.isEmpty() && (post.getDescription() == null || post.getDescription().isEmpty()))
                     return;

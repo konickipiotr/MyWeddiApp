@@ -24,6 +24,8 @@ import com.myweddi.model.ChurchInfo;
 import com.myweddi.model.Host;
 import com.myweddi.model.WeddingInfo;
 import com.myweddi.settings.Settings;
+import com.myweddi.utils.MenuHandler;
+import com.myweddi.utils.OtherUtils;
 import com.myweddi.utils.RequestUtils;
 import com.squareup.picasso.Picasso;
 
@@ -49,11 +51,7 @@ public class GuestInfo extends AppCompatActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 
-        myProfilPhoto = (ImageView) findViewById(R.id.myprofilphoto);
-        Glide.with(this)
-                .load("https://fwcdn.pl/fpo/71/07/707107/7648804.3.jpg")
-                .circleCrop()
-                .into(myProfilPhoto);
+        OtherUtils.setProfilePhoto(myProfilPhoto, this, GuestInfo.this);
         initialize();
 
         LatLng churchCoord = new LatLng(50.290992, 16.87383);
@@ -85,32 +83,10 @@ public class GuestInfo extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-
-        switch (item.getItemId()) {
-            case R.id.bHome:
-                Log.i("Menu","Home");
-                startActivity(new Intent(GuestInfo.this, GuestHome.class));
-                return true;
-            case R.id.bInfo:
-                Log.i("Menu","Info");
-                startActivity(new Intent(GuestInfo.this, GuestInfo.class));
-                //this.finish();
-                return true;
-            case R.id.bTable:
-                Log.i("Menu","Stoły");
-                startActivity(new Intent(GuestInfo.this, TableActivity.class));
-                return true;
-            case R.id.bLogout:
-                Log.i("Menu","Wyloguj");
-                return true;
-            case R.id.bOptions:
-                Log.i("Menu","Opcje");
-                startActivity(new Intent(GuestInfo.this, SettingActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        boolean menu = MenuHandler.menu(item, this, GuestInfo.this);
+        if(!menu)
+            return super.onOptionsItemSelected(item);
+        return menu;
     }
 
     private void initialize() {
@@ -181,9 +157,9 @@ public class GuestInfo extends AppCompatActivity {
 
             partyHouseName.setText(weddingInfo.getName());
             partyHouseAddress.setText(weddingInfo.getAddress());
-            Picasso.get().load(churchInfo.getWebAppPath()).into(churchPhoto);
-            Picasso.get().load(weddingInfo.getWebAppPath()).into(partyHousePhoto);
-            Picasso.get().load(host.getPhoto()).into(hostsPhoto);
+            Picasso.get().load(Settings.server_url + churchInfo.getWebAppPath()).into(churchPhoto);
+            Picasso.get().load(Settings.server_url +weddingInfo.getWebAppPath()).into(partyHousePhoto);
+            Picasso.get().load(Settings.server_url +host.getWebAppPath()).into(hostsPhoto);
 
         }
     }

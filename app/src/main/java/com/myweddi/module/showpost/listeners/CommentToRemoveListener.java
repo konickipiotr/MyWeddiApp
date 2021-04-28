@@ -1,18 +1,16 @@
-package com.myweddi.utils;
+package com.myweddi.module.showpost.listeners;
 
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.view.View;
 
-import com.myweddi.model.post.Comment;
 import com.myweddi.settings.Settings;
+import com.myweddi.utils.RequestUtils;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
-
-import javax.xml.validation.SchemaFactoryLoader;
 
 public class CommentToRemoveListener implements View.OnClickListener {
 
@@ -31,7 +29,6 @@ public class CommentToRemoveListener implements View.OnClickListener {
         context.startActivity(context.getIntent());
     }
 
-
     private class RemoveRequest extends AsyncTask<Long, Void, Void>{
 
         @Override
@@ -42,7 +39,7 @@ public class CommentToRemoveListener implements View.OnClickListener {
             HttpHeaders requestHeaders = requestUtils.getRequestHeaders();
 
             String path = Settings.server_url + "/api/post/deletecomment/" + params[0];
-            restTemplate.exchange(path, HttpMethod.DELETE, new HttpEntity<Comment>(requestHeaders), Long.class);
+            restTemplate.exchange(path, HttpMethod.DELETE, new HttpEntity<>(requestHeaders), Void.class);
             return null;
         }
     }

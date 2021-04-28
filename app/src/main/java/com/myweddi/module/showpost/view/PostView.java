@@ -1,14 +1,10 @@
-package com.myweddi.view;
+package com.myweddi.module.showpost.view;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.myweddi.model.Photo;
 import com.myweddi.model.User;
-import com.myweddi.model.post.Post;
+import com.myweddi.module.showpost.model.Post;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,17 +13,15 @@ public class PostView {
     private Long id;
     private Long weddingid;
     private Long userid;
-    //private LocalDateTime creationdate;
     private String description;
 
     private String username;
     private String userphoto;
 
-    private String postdate;
-    private String posttime;
-
-    private boolean isLiked;
+    private String postdatetime;
+    private boolean weddiLike;
     private int likeNumber;
+    private boolean myPost;
 
     private List<Photo> photos = new ArrayList<>();
     private List<CommentView> comments = new ArrayList<>();
@@ -39,16 +33,10 @@ public class PostView {
         this.id = p.getId();
         this.weddingid = p.getWeddingid();
         this.userid = p.getUserid();
-        //this.creationdate = p.getCreationdate();
         this.description = p.getDescription();
         this.username = user.getName();
-        this.userphoto = user.getPhoto();
+        this.userphoto = user.getWebAppPath();
     }
-
-//    public void covert() {
-//        this.postdate = this.creationdate.toLocalDate().toString();
-//        this.posttime = this.creationdate.toLocalTime().truncatedTo(ChronoUnit.MINUTES).toString();
-//    }
 
     public Long getId() {
         return id;
@@ -74,14 +62,6 @@ public class PostView {
         this.userid = userid;
     }
 
-//    public LocalDateTime getCreationdate() {
-//        return creationdate;
-//    }
-//
-//    public void setCreationdate(LocalDateTime creationdate) {
-//        this.creationdate = creationdate;
-//    }
-
     public String getDescription() {
         return description;
     }
@@ -106,20 +86,36 @@ public class PostView {
         this.userphoto = userphoto;
     }
 
-    public String getPostdate() {
-        return postdate;
+    public String getPostdatetime() {
+        return postdatetime;
     }
 
-    public void setPostdate(String postdate) {
-        this.postdate = postdate;
+    public void setPostdatetime(String postdatetime) {
+        this.postdatetime = postdatetime;
     }
 
-    public String getPosttime() {
-        return posttime;
+    public boolean isWeddiLike() {
+        return weddiLike;
     }
 
-    public void setPosttime(String posttime) {
-        this.posttime = posttime;
+    public void setWeddiLike(boolean weddiLike) {
+        this.weddiLike = weddiLike;
+    }
+
+    public int getLikeNumber() {
+        return likeNumber;
+    }
+
+    public void setLikeNumber(int likeNumber) {
+        this.likeNumber = likeNumber;
+    }
+
+    public boolean isMyPost() {
+        return myPost;
+    }
+
+    public void setMyPost(boolean myPost) {
+        this.myPost = myPost;
     }
 
     public List<Photo> getPhotos() {
@@ -136,21 +132,5 @@ public class PostView {
 
     public void setComments(List<CommentView> comments) {
         this.comments = comments;
-    }
-
-    public boolean isLiked() {
-        return isLiked;
-    }
-
-    public void setLiked(boolean liked) {
-        isLiked = liked;
-    }
-
-    public int getLikeNumber() {
-        return likeNumber;
-    }
-
-    public void setLikeNumber(int likeNumber) {
-        this.likeNumber = likeNumber;
     }
 }

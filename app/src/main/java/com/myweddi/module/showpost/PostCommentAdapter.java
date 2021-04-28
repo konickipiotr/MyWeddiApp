@@ -1,4 +1,4 @@
-package com.myweddi.utils;
+package com.myweddi.module.showpost;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -13,18 +13,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.myweddi.R;
+import com.myweddi.module.showpost.listeners.CommentToRemoveListener;
 import com.myweddi.settings.Settings;
-import com.myweddi.view.CommentView;
+import com.myweddi.module.showpost.view.CommentView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class PostCommentListView extends ArrayAdapter<String> {
+public class PostCommentAdapter extends ArrayAdapter<String> {
 
     private Activity context;
     private List<CommentView> commentViewList;
 
-    public PostCommentListView(Activity context, List<CommentView> commentViewList, List<String> dummy) {
+    public PostCommentAdapter(Activity context, List<CommentView> commentViewList, List<String> dummy) {
         super(context, R.layout.comment_layout, dummy);
         this.commentViewList = commentViewList;
         this.context = context;
@@ -57,7 +58,7 @@ public class PostCommentListView extends ArrayAdapter<String> {
         }
 
         commentViewHolder.userCom.setText(commentView.getUsername());
-        commentViewHolder.commentDate.setText(commentView.getPostdate());
+        commentViewHolder.commentDate.setText(commentView.getPostdatetime());
         commentViewHolder.commentContent.setText(commentView.getContent());
         if(commentView.getUserid().equals(Settings.user.getId())){
             commentViewHolder.removePost.setVisibility(View.VISIBLE);
@@ -73,11 +74,11 @@ public class PostCommentListView extends ArrayAdapter<String> {
         public ImageButton removePost;
 
         public CommentViewHolder(View view) {
-            cProfilPhoto = (ImageView) view.findViewById(R.id.cProfilPhoto);
-            userCom = (TextView) view.findViewById(R.id.userCom);
-            commentDate = (TextView) view.findViewById(R.id.commentDate);
-            commentContent = (TextView) view.findViewById(R.id.commentContent);
-            removePost = (ImageButton) view.findViewById(R.id.removePost2);
+            cProfilPhoto = (ImageView) view.findViewById(R.id.c2ProfilPhoto);
+            userCom = (TextView) view.findViewById(R.id.user2Com);
+            commentDate = (TextView) view.findViewById(R.id.comment2Date);
+            commentContent = (TextView) view.findViewById(R.id.comment2Content);
+            removePost = (ImageButton) view.findViewById(R.id.removeComment2);
         }
     }
 }

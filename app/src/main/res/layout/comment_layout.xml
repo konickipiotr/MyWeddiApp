@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_layout"
+    android:id="@+id/table_main_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
@@ -21,7 +21,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/firstComment"
+            android:id="@+id/SecondLastComment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#E0DDE6"
@@ -30,7 +30,7 @@
 
 
             <ImageView
-                android:id="@+id/cProfilPhoto"
+                android:id="@+id/c2ProfilPhoto"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="5dp"
@@ -50,7 +50,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/userCom"
+                        android:id="@+id/user2Com"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
@@ -60,7 +60,7 @@
                         android:textStyle="bold|italic" />
 
                     <TextView
-                        android:id="@+id/commentDate"
+                        android:id="@+id/comment2Date"
                         android:layout_width="126dp"
                         android:layout_height="19dp"
                         android:layout_marginEnd="5dp"
@@ -71,7 +71,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/commentContent"
+                    android:id="@+id/comment2Content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
@@ -79,7 +79,7 @@
             </LinearLayout>
 
             <ImageButton
-                android:id="@+id/removePost2"
+                android:id="@+id/removeComment2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="0"

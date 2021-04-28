@@ -2,10 +2,15 @@ package com.myweddi.roles.guest;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,13 +24,17 @@ import android.widget.ListView;
 import com.bumptech.glide.Glide;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.myweddi.MainActivity;
+import com.myweddi.ProfilePhotoActivity;
 import com.myweddi.R;
 import com.myweddi.model.ListWrapper;
 import com.myweddi.settings.Settings;
-import com.myweddi.utils.CreatePost;
-import com.myweddi.utils.CustomListview;
+import com.myweddi.module.createpost.CreatePost;
+import com.myweddi.module.showpost.PostListAdapter;
+import com.myweddi.utils.MenuHandler;
+import com.myweddi.utils.OtherUtils;
 import com.myweddi.utils.RequestUtils;
-import com.myweddi.view.PostView;
+import com.myweddi.module.showpost.view.PostView;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -36,15 +45,14 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.myweddi.R.id.addComment;
-
 public class GuestHome extends AppCompatActivity {
 
     ListView listView;
     Button bAddPost;
     ImageButton addComment;
 
-    ImageView imageView;
+    ImageView myProfilPhoto;
+    private final int CAMERA_SRC = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +65,12 @@ public class GuestHome extends AppCompatActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 
-        imageView = (ImageView) findViewById(R.id.myprofilphoto);
-        Glide.with(this)
-                .load("https://fwcdn.pl/fpo/71/07/707107/7648804.3.jpg")
-                .circleCrop()
-                .into(imageView);
+        OtherUtils.setProfilePhoto(myProfilPhoto, this, GuestHome.this);
+//        myProfilPhoto = (ImageView) findViewById(R.id.myprofilphoto);
+//        Glide.with(this)
+//                .load(Settings.profilePhotoBitmap)
+//                .circleCrop()
+//                .into(myProfilPhoto);
 
 
 
@@ -86,6 +95,15 @@ public class GuestHome extends AppCompatActivity {
             }
         });
 
+//        myProfilPhoto.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//                startActivity(new Intent(GuestHome.this, ProfilePhotoActivity.class));
+//            }
+//        });
+
+
 
     }
 
@@ -99,31 +117,10 @@ public class GuestHome extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-
-        switch (item.getItemId()) {
-            case R.id.bHome:
-                Log.i("Menu","Home");
-                startActivity(new Intent(GuestHome.this, GuestHome.class));
-                return true;
-            case R.id.bInfo:
-                Log.i("Menu","Info");
-                startActivity(new Intent(GuestHome.this, GuestInfo.class));
-                return true;
-            case R.id.bTable:
-                Log.i("Menu","Stoły");
-                startActivity(new Intent(GuestHome.this, TableActivity.class));
-                return true;
-            case R.id.bLogout:
-                Log.i("Menu","Wyloguj");
-                return true;
-            case R.id.bOptions:
-                Log.i("Menu","Opcje");
-                startActivity(new Intent(GuestHome.this, SettingActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        boolean menu = MenuHandler.menu(item, this, GuestHome.this);
+        if(!menu)
+            return super.onOptionsItemSelected(item);
+        return menu;
     }
 
     class FetchPosts extends AsyncTask<String, List<PostView>, List<PostView>> {
@@ -155,8 +152,8 @@ public class GuestHome extends AppCompatActivity {
         protected void onPostExecute(List<PostView> postViews) {
             ListView listView = (ListView) findViewById(R.id.listview);
             List<String> titles = getTitles(postViews);
-            CustomListview customListview = new CustomListview(GuestHome.this, postViews, titles);
-            listView.setAdapter(customListview);
+            PostListAdapter postListAdapter = new PostListAdapter(GuestHome.this, postViews, titles);
+            listView.setAdapter(postListAdapter);
         }
     }
 
