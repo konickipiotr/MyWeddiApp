@@ -9,9 +9,12 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="mainColor">#935F81</color>
+    <color name="textBackground">#734563</color>
     <color name="mainColorStrong">#632121</color>
 
     <color name="backgroundColor">#f6e6fc</color>
+
+    <color name="selectedbtnColor">#FD8D85</color>
 
 
 </resources>

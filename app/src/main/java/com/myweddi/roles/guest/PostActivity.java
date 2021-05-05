@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myweddi.R;
@@ -27,7 +26,7 @@ import com.myweddi.settings.Settings;
 import com.myweddi.utils.ListUtils;
 import com.myweddi.module.showpost.PostCommentAdapter;
 import com.myweddi.module.showpost.listeners.RemovePostListener;
-import com.myweddi.utils.OtherUtils;
+import com.myweddi.utils.Utils;
 import com.myweddi.utils.RequestUtils;
 import com.myweddi.module.showpost.listeners.StarButtonListener;
 import com.myweddi.module.showpost.view.CommentView;
@@ -59,7 +58,7 @@ public class PostActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 
-        OtherUtils.setProfilePhoto(myProfilPhoto, this, PostActivity.this);
+        Utils.setProfilePhoto(myProfilPhoto, this, PostActivity.this);
 
         Intent intent = getIntent();
         postid = intent.getLongExtra("postid", -1);

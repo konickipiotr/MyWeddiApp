@@ -22,7 +22,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyWeddi">
-        <activity android:name=".module.forgotpassword.RequestNewPassActivity"></activity>
+        <activity android:name=".roles.host.HostGiftActivity"></activity>
+        <activity android:name=".roles.host.HostTableActivity" />
+        <activity android:name=".roles.host.CreateTablesActivity" />
+        <activity android:name=".roles.host.EditInfoActivity" />
+        <activity android:name=".module.forgotpassword.RequestNewPassActivity" />
         <activity android:name=".module.registration.RegistrationCompleteActivity" />
         <activity android:name=".module.registration.RegistrationActivity" />
         <activity android:name=".ProfilePhotoActivity" />
@@ -43,9 +47,9 @@
         <activity android:name=".roles.guest.GiftsActivity" />
         <activity android:name=".roles.guest.TableActivity" />
         <activity android:name=".roles.guest.SettingActivity" />
-        <activity android:name=".roles.guest.GuestInfo" />
+        <activity android:name=".roles.WeddingInfoActivity" />
         <activity android:name=".module.createpost.CreatePost" />
-        <activity android:name=".roles.guest.GuestHome" />
+        <activity android:name=".roles.Home" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

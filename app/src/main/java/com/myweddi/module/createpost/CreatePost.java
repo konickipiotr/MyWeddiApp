@@ -25,7 +25,7 @@ import android.widget.LinearLayout;
 import com.myweddi.R;
 import com.myweddi.module.showpost.model.Post;
 import com.myweddi.module.showpost.model.Posttype;
-import com.myweddi.roles.guest.GuestHome;
+import com.myweddi.roles.Home;
 import com.myweddi.settings.Settings;
 import com.myweddi.utils.RequestUtils;
 
@@ -103,7 +103,7 @@ public class CreatePost extends AppCompatActivity {
 
                 AddPostTask addPostTask = new AddPostTask();
                 addPostTask.execute(post);
-                startActivity(new Intent(CreatePost.this, GuestHome.class));
+                startActivity(new Intent(CreatePost.this, Home.class));
             }
         });
 

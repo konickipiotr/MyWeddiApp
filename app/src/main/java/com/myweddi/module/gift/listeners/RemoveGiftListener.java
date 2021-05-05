@@ -1,11 +1,11 @@
-package com.myweddi.module.showpost.listeners;
+package com.myweddi.module.gift.listeners;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.View;
 
-import com.myweddi.roles.Home;
+import com.myweddi.roles.host.HostGiftActivity;
 import com.myweddi.settings.Settings;
 import com.myweddi.utils.RequestUtils;
 
@@ -14,34 +14,37 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
-public class RemovePostListener implements View.OnClickListener {
+public class RemoveGiftListener implements View.OnClickListener {
 
-    private Long postid;
+    private Long giftid;
     private Activity context;
 
-    public RemovePostListener(Long postid, Activity context) {
-        this.postid = postid;
+    public RemoveGiftListener(Long giftid, Activity context) {
+        this.giftid = giftid;
         this.context = context;
     }
 
     @Override
     public void onClick(View v) {
-        new RemovePostRequest().execute(postid);
+        new RemoveCustomGiftAsync().execute();
         context.finish();
-        context.startActivity(new Intent(context, Home.class));
+        context.startActivity(new Intent(context, HostGiftActivity.class));
     }
 
-    private class RemovePostRequest extends AsyncTask<Long, Void, Void> {
+    class RemoveCustomGiftAsync extends AsyncTask<Void,  Void, Void> {
 
         @Override
-        protected Void doInBackground(Long... params) {
-
+        protected Void doInBackground(Void... params) {
             RequestUtils requestUtils = new RequestUtils();
             RestTemplate restTemplate = requestUtils.getRestTemplate();
             HttpHeaders requestHeaders = requestUtils.getRequestHeaders();
 
-            String path = Settings.server_url + "/api/post/deletepost/" + params[0];
-            restTemplate.exchange(path, HttpMethod.DELETE, new HttpEntity<>(requestHeaders), Void.class);
+            String path = Settings.server_url + "/api/gift/remove";
+            restTemplate.exchange(
+                    path,
+                    HttpMethod.POST,
+                    new HttpEntity<Object>(giftid, requestHeaders),
+                    Void.class);
             return null;
         }
     }

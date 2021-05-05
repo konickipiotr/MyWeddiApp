@@ -11,7 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            tools:context=".roles.guest.GuestInfo">
+            tools:context=".roles.WeddingInfoActivity">
 
             <TextView
                 android:id="@+id/textheader"
@@ -26,6 +26,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/bInfo_Edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edytuj"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/hostsPhoto"

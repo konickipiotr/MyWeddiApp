@@ -6,9 +6,47 @@
     <string name="email">email</string>
     <string name="phone">phone</string>
 
+    <string name="err_login_msg">Błędne hasło lub login</string>
+
     <string name="reg_who_you_are">Kim jesteś?</string>
     <string name="reg_who_hosts">Państwo Młodzi</string>
     <string name="reg_who_guest">Gość</string>
     <string name="reg_who_dj">Dj/Zespół</string>
     <string name="reg_who_photographer">Fotograf</string>
+
+
+    <string name="info_ceremony_date">Data Uroczystości</string>
+    <string name="info_hour">Godzina</string>
+    <string name="info_churchname_info">Miejsce ślubu</string>
+    <string name="info_info">Dodatkowe informacje</string>
+    <string name="info_weddinghouse_info">Miejsce wesela</string>
+
+
+    <string name="table_create">Przygotuj stoły</string>
+    <string name="table_recreate">Resetuj stoły</string>
+    <string name="table_how_many">Ile stołów</string>
+    <string name="table_table">Stół</string>
+
+
+    <string name="address">Adres</string>
+    <string name="next">Dalej</string>
+    <string name="save">Zapisz</string>
+    <string name="add">Dodaj</string>
+
+    <string name="reg_msg1_all_fields_required">Wszystkie pola są wymagane</string>
+
+
+    <string name="host_gift_main_gift">GŁÓWNY PREZENT</string>
+    <string name="host_gift_small_gift">PREZENT ZAMIAST KWIATÓW (OPCIONALNIE)</string>
+    <string name="host_gift_msg1">Jeśli nie satysfakcjonują cię powyższe wybory, wpisz informacjie w polu poniżej. Możesz tu umieścić wierszyk, doatkowe inforamcjie jak np: fundacja, numer konta</string>
+    <string name="host_gift_msg2">Jeśli zależy Ci na konkretnej rzeczy/książce itd. dodaj ja do listy</string>
+
+    <string name="gift_POTTEDFLOWERS">Kwiaty dońiczkowe</string>
+    <string name="gift_WINE">Wino</string>
+    <string name="gift_BOOKS">Książki</string>
+    <string name="gift_FOODER">Karma</string>
+    <string name="gift_LOTTERY">Losy na loterie</string>
+    <string name="gift_CHARITY">Dobroczynność</string>
+    <string name="gift_MONEY">Pieniądze</string>
+    <string name="gift_GIFTS">Prezenty</string>
 </resources>

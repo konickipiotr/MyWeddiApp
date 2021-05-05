@@ -1,4 +1,4 @@
-package com.myweddi.roles.guest;
+package com.myweddi.roles.host;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,14 +17,15 @@ import android.widget.ListView;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myweddi.R;
+import com.myweddi.module.table.HostTableListAdapter;
+import com.myweddi.module.table.TableListAdapter;
 import com.myweddi.module.table.model.TablePlace;
 import com.myweddi.module.table.model.TableWrapper;
-import com.myweddi.roles.host.CreateTablesActivity;
+import com.myweddi.roles.guest.TableActivity;
 import com.myweddi.settings.Settings;
 import com.myweddi.utils.MenuHandler;
-import com.myweddi.utils.Utils;
 import com.myweddi.utils.RequestUtils;
-import com.myweddi.module.table.TableListAdapter;
+import com.myweddi.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import org.springframework.http.HttpEntity;
@@ -36,27 +37,33 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TableActivity extends AppCompatActivity {
+public class HostTableActivity extends AppCompatActivity {
 
     ImageView myProfilPhoto;
     ImageView tableSchema;
+    private Button btable_create_tables;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_table);
+        setContentView(R.layout.activity_host_table);
         setTitle("");
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 
-        Utils.setProfilePhoto(myProfilPhoto, this, TableActivity.this);
+        Utils.setProfilePhoto(myProfilPhoto, this, HostTableActivity.this);
 
-        this.tableSchema = (ImageView) findViewById(R.id.tableImage);
+        btable_create_tables = findViewById(R.id.bhosttable_create_tables);
+        this.tableSchema = (ImageView) findViewById(R.id.hosttableImage);
 
-        TableAsync tableAsync = new TableAsync();
-        tableAsync.execute();
+//        btable_create_tables.setOnClickListener(v ->{
+//            startActivity(new Intent(HostTableActivity.this, CreateTablesActivity.class));
+//        });
+
+//        TableAsync tableAsync = new TableAsync();
+//        tableAsync.execute();
     }
 
     @Override
@@ -68,7 +75,7 @@ public class TableActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        boolean menu = MenuHandler.menu(item, this, TableActivity.this);
+        boolean menu = MenuHandler.menu(item, this, HostTableActivity.this);
         if(!menu)
             return super.onOptionsItemSelected(item);
         return menu;
@@ -105,9 +112,9 @@ public class TableActivity extends AppCompatActivity {
                 tableSchema.setVisibility(View.GONE);
             }
 
-            ListView listView = (ListView) findViewById(R.id.tableListView);
-            TableListAdapter tableListAdapter = new TableListAdapter(TableActivity.this, tableWrapper.getTablePlaces(), getTitles(tableWrapper));
-            listView.setAdapter(tableListAdapter);
+            ListView listView = (ListView) findViewById(R.id.hosttableListView);
+            HostTableListAdapter hostTableListAdapter = new HostTableListAdapter(HostTableActivity.this, tableWrapper, getTitles(tableWrapper));
+            listView.setAdapter(hostTableListAdapter);
         }
 
         private List<String> getTitles(TableWrapper tableWrapper){

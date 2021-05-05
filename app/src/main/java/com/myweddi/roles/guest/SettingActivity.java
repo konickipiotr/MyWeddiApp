@@ -3,18 +3,15 @@ package com.myweddi.roles.guest;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.myweddi.R;
 import com.myweddi.utils.MenuHandler;
-import com.myweddi.utils.OtherUtils;
+import com.myweddi.utils.Utils;
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -30,7 +27,7 @@ public class SettingActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 
-        OtherUtils.setProfilePhoto(myProfilPhoto, this, SettingActivity.this);
+        Utils.setProfilePhoto(myProfilPhoto, this, SettingActivity.this);
     }
 
     @Override

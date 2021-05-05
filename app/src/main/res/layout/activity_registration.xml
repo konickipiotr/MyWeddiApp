@@ -77,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Wszystkie pola są wymagane"
+            android:text="@string/reg_msg1_all_fields_required"
             android:textColor="@color/design_default_color_error" />
 
 
@@ -392,7 +392,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Wszystkie pola są wymagane"
+            android:text="@string/reg_msg1_all_fields_required"
             android:textColor="@color/design_default_color_error" />
 
 

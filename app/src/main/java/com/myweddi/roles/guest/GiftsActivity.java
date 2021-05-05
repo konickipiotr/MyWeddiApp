@@ -3,10 +3,8 @@ package com.myweddi.roles.guest;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myweddi.R;
@@ -24,7 +21,7 @@ import com.myweddi.settings.Settings;
 import com.myweddi.module.gift.GiftAdapter;
 import com.myweddi.utils.ListUtils;
 import com.myweddi.utils.MenuHandler;
-import com.myweddi.utils.OtherUtils;
+import com.myweddi.utils.Utils;
 import com.myweddi.utils.RequestUtils;
 
 import org.springframework.http.HttpEntity;
@@ -50,7 +47,7 @@ public class GiftsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 
-        OtherUtils.setProfilePhoto(myProfilPhoto, this, GiftsActivity.this);
+        Utils.setProfilePhoto(myProfilPhoto, this, GiftsActivity.this);
 
         giftInfo = (TextView) findViewById(R.id.giftInfo);
         GiftAsync giftAsync = new GiftAsync();

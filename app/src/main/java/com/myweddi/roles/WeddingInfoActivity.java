@@ -1,31 +1,28 @@
-package com.myweddi.roles.guest;
+package com.myweddi.roles;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.myweddi.ChurchMap;
-import com.myweddi.ChurchMaps;
 import com.myweddi.R;
-import com.myweddi.model.ChurchInfo;
 import com.myweddi.model.Host;
-import com.myweddi.model.WeddingInfo;
+import com.myweddi.module.weddinginfo.WeddingInfo;
+import com.myweddi.roles.host.EditInfoActivity;
 import com.myweddi.settings.Settings;
 import com.myweddi.utils.MenuHandler;
-import com.myweddi.utils.OtherUtils;
+import com.myweddi.utils.Utils;
 import com.myweddi.utils.RequestUtils;
 import com.squareup.picasso.Picasso;
 
@@ -35,24 +32,35 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-public class GuestInfo extends AppCompatActivity {
+public class WeddingInfoActivity extends AppCompatActivity {
 
-    ImageView myProfilPhoto, hostsPhoto, churchPhoto, partyHousePhoto;
-    TextView brideName, groomName, bridePhone, groomPhone, churchName, churchAddress, weddingTime,
+    private ImageView myProfilPhoto, hostsPhoto, churchPhoto, partyHousePhoto;
+    private TextView brideName, groomName, bridePhone, groomPhone, churchName, churchAddress, weddingTime,
     partyHouseName, partyHouseAddress;
+    private Button edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_guest_info);
+        setContentView(R.layout.activity_wedding_info);
         setTitle("");
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 
-        OtherUtils.setProfilePhoto(myProfilPhoto, this, GuestInfo.this);
+        Utils.setProfilePhoto(myProfilPhoto, this, WeddingInfoActivity.this);
         initialize();
+
+        if(Settings.user.getRole().equals("HOST")) {
+            edit.setVisibility(View.VISIBLE);
+            edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(WeddingInfoActivity.this, EditInfoActivity.class));
+                }
+            });
+        }
 
         LatLng churchCoord = new LatLng(50.290992, 16.87383);
         ChurchMap mapFragment = new ChurchMap(churchCoord);
@@ -83,7 +91,7 @@ public class GuestInfo extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        boolean menu = MenuHandler.menu(item, this, GuestInfo.this);
+        boolean menu = MenuHandler.menu(item, this, WeddingInfoActivity.this);
         if(!menu)
             return super.onOptionsItemSelected(item);
         return menu;
@@ -93,6 +101,7 @@ public class GuestInfo extends AppCompatActivity {
         hostsPhoto = (ImageView) findViewById(R.id.hostsPhoto);
         churchPhoto = (ImageView) findViewById(R.id.churchPhoto);
         partyHousePhoto = (ImageView) findViewById(R.id.partyHousePhoto);
+        edit = (Button) findViewById(R.id.bInfo_Edit);
 
         brideName = (TextView) findViewById(R.id.brideName);
         bridePhone = (TextView) findViewById(R.id.bridePhone);
@@ -113,29 +122,23 @@ public class GuestInfo extends AppCompatActivity {
             RestTemplate restTemplate = requestUtils.getRestTemplate();
             HttpHeaders requestHeaders = requestUtils.getRequestHeaders();
 
-            String path = Settings.server_url + "/api/churchinfo/" + Settings.weddingid;
-            ResponseEntity<ChurchInfo> response = restTemplate.exchange(path,
-                    HttpMethod.GET,
-                    new HttpEntity<Object>(requestHeaders),
-                    ChurchInfo.class);
-
-            ChurchInfo churchInfo = response.getBody();
-
-            path = Settings.server_url + "/api/weddinginfo/" + Settings.weddingid;
-            ResponseEntity<WeddingInfo> response2 = restTemplate.exchange(path,
+            String path = Settings.server_url + "/api/weddinginfo/" + Settings.weddingid;
+            ResponseEntity<WeddingInfo> response = restTemplate.exchange(path,
                     HttpMethod.GET,
                     new HttpEntity<Object>(requestHeaders),
                     WeddingInfo.class);
-            WeddingInfo weddingInfo = response2.getBody();
+
+            WeddingInfo weddingInfo = response.getBody();
+
 
             path = Settings.server_url + "/api/user/host";
-            ResponseEntity<Host> response3 = restTemplate.postForEntity(path,
+            ResponseEntity<Host> response2 = restTemplate.postForEntity(path,
                     new HttpEntity<Long>(Settings.weddingid, requestHeaders),
                     Host.class);
-            Host host = response3.getBody();
+            Host host = response2.getBody();
 
 
-            Object[] retVal = {(Object)weddingInfo, (Object)churchInfo, (Object)host};
+            Object[] retVal = {(Object)weddingInfo, (Object)host};
             return retVal;
         }
 
@@ -143,24 +146,22 @@ public class GuestInfo extends AppCompatActivity {
         @Override
         protected void onPostExecute(Object[] retVal) {
             WeddingInfo weddingInfo = (WeddingInfo) retVal[0];
-            ChurchInfo churchInfo = (ChurchInfo) retVal[1];
-            Host host = (Host) retVal[2];
+            Host host = (Host) retVal[1];
             brideName.setText(host.getBrideName());
             bridePhone.setText(host.getBridephone());
 
             groomName.setText(host.getGroomName());
             groomPhone.setText(host.getGroomphone());
 
-            churchName.setText(churchInfo.getName());
-            churchAddress.setText(churchInfo.getAddress());
+            churchName.setText(weddingInfo.getChurchname());
+            churchAddress.setText(weddingInfo.getChurchaddress());
             weddingTime.setText("not implemented");
 
-            partyHouseName.setText(weddingInfo.getName());
-            partyHouseAddress.setText(weddingInfo.getAddress());
-            Picasso.get().load(Settings.server_url + churchInfo.getWebAppPath()).into(churchPhoto);
-            Picasso.get().load(Settings.server_url +weddingInfo.getWebAppPath()).into(partyHousePhoto);
+            partyHouseName.setText(weddingInfo.getWeddinghousename());
+            partyHouseAddress.setText(weddingInfo.getwAddress());
+            Picasso.get().load(Settings.server_url + weddingInfo.getChWebAppPath()).into(churchPhoto);
+            Picasso.get().load(Settings.server_url +weddingInfo.getwWebAppPath()).into(partyHousePhoto);
             Picasso.get().load(Settings.server_url +host.getWebAppPath()).into(hostsPhoto);
-
         }
     }
 }

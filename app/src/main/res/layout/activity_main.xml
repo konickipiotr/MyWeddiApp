@@ -62,7 +62,7 @@
             android:hint="login"
             android:inputType="textPersonName"
             android:padding="5dp"
-            android:text="sg"
+            android:text="so"
             android:textSize="30sp" />
 
         <TextView

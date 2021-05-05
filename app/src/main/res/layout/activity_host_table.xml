@@ -9,7 +9,7 @@
 
 
     <LinearLayout
-        android:id="@+id/mainLayout"
+        android:id="@+id/hosttable_mainLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -17,19 +17,19 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btable_create_tables"
+            android:id="@+id/bhosttable_create_tables"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/table_create" />
 
         <ImageView
-            android:id="@+id/tableImage"
+            android:id="@+id/hosttableImage"
             android:layout_width="match_parent"
             android:layout_height="349dp"
             tools:srcCompat="@tools:sample/avatars" />
 
         <ListView
-            android:id="@+id/tableListView"
+            android:id="@+id/hosttableListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp" />

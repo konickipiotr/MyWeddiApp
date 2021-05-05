@@ -8,15 +8,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.myweddi.model.User;
 import com.myweddi.module.forgotpassword.RequestNewPassActivity;
 import com.myweddi.module.registration.RegistrationActivity;
-import com.myweddi.roles.guest.GuestHome;
+import com.myweddi.roles.Home;
 import com.myweddi.settings.Settings;
-import com.myweddi.utils.OtherUtils;
+import com.myweddi.utils.Utils;
 
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
@@ -30,6 +29,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.ref.WeakReference;
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,81 +48,98 @@ public class MainActivity extends AppCompatActivity {
         String message = intent.getStringExtra("message");
         String errormessage = intent.getStringExtra("errormessage");
 
-        error_msg = (TextView) findViewById(R.id.main_error_msg);
-        msg = (TextView) findViewById(R.id.main_msg);
-        bRegistration = (Button) findViewById(R.id.bRegistration);
-        bResetPassword = (Button) findViewById(R.id.bResetPassword);
+        error_msg = findViewById(R.id.main_error_msg);
+        msg = findViewById(R.id.main_msg);
+        bRegistration = findViewById(R.id.bRegistration);
+        bResetPassword = findViewById(R.id.bResetPassword);
+        loginButton = findViewById(R.id.bSignIn);
+        eLogin = findViewById(R.id.loginInput);
+        ePassword = findViewById(R.id.passwordInput);
 
-        if(errormessage != null && !errormessage.isEmpty()){
+        if (errormessage != null && !errormessage.isEmpty()) {
             error_msg.setText(errormessage);
             error_msg.setVisibility(View.VISIBLE);
         }
 
-        if(message != null && !message.isEmpty()) {
+        if (message != null && !message.isEmpty()) {
             msg.setText(message);
             msg.setVisibility(View.VISIBLE);
         }
 
-        bRegistration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, RegistrationActivity.class));
-            }
-        });
+        bRegistration.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, RegistrationActivity.class)));
 
-        bResetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, RequestNewPassActivity.class ));
-            }
+        bResetPassword.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, RequestNewPassActivity.class)));
+
+        loginButton.setOnClickListener(v -> {
+
+
+            Settings.username = eLogin.getText().toString();
+            Settings.passoword = ePassword.getText().toString();
+            new LoginTask(this).execute();
         });
     }
 
-    public void signIn(View view) {
 
-        eLogin = (EditText) findViewById(R.id.loginInput);
-        ePassword = (EditText) findViewById(R.id.passwordInput);
 
-        Settings.username = eLogin.getText().toString();
-        Settings.passoword = ePassword.getText().toString();
+    private static class LoginTask extends AsyncTask<Void, Void, User> {
 
-        String path= Settings.server_url + "/api/user";
-        LoginTask loginTask = new LoginTask();
-        loginTask.execute(path);
-    }
+        private final WeakReference<MainActivity> activityReference;
 
-    class LoginTask extends AsyncTask<String, Void, Void> {
+        public LoginTask(MainActivity context) {
+            this.activityReference = new WeakReference<>(context);
+        }
 
         @Override
-        protected Void doInBackground(String... params) {
+        protected User doInBackground(Void... params) {
+            String path= Settings.server_url + "/api/user";
+
             HttpAuthentication authHeader = new HttpBasicAuthentication(Settings.username,Settings.passoword);
             HttpHeaders requestHeaders = new HttpHeaders();
             requestHeaders.setAuthorization(authHeader);
             requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
-            // Create a new RestTemplate instance
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+            User user = null;
             try {
-                ResponseEntity<User> response = restTemplate.exchange(params[0], HttpMethod.GET, new HttpEntity<Object>(requestHeaders), User.class);
-                if(response.getStatusCode() == HttpStatus.OK){
-                    User user = response.getBody();
-                    Settings.user = user;
-                    Settings.weddingid = user.getWeddingid();
-                    if(user.getWebAppPath() != null){
-                        String fullPath = Settings.server_url + user.getWebAppPath();
-                        Settings.profilePhotoBitmap = OtherUtils.getBitmapFromURL(fullPath);
-                    }
-                    startActivity(new Intent(MainActivity.this, GuestHome.class));
-                }else{
-                    Settings.username = "";
-                    Settings.passoword = "";
+                ResponseEntity<User> response = restTemplate.exchange(path, HttpMethod.GET, new HttpEntity<>(requestHeaders), User.class);
+                if(response.getStatusCode().equals(HttpStatus.OK)){
+                    user = response.getBody();
                 }
             }catch (HttpClientErrorException e){
+                return null;
 
             }
-            //ResponseEntity<PostListWraper> response = restTemplate.exchange(params[0], HttpMethod.GET, new HttpEntity<Object>(requestHeaders), PostListWraper.class);
-            return null;
+            return user;
+        }
+
+        @Override
+        protected void onPostExecute(User user) {
+            super.onPostExecute(user);
+            MainActivity context = activityReference.get();
+
+            if(user != null){
+                Settings.user = user;
+                Settings.weddingid = user.getWeddingid();
+                if(user.getWebAppPath() != null){
+                    String fullPath = Settings.server_url + user.getWebAppPath();
+                    Settings.profilePhotoBitmap = Utils.getBitmapFromURL(fullPath);
+
+
+                }
+                context.finish();
+                context.startActivity(new Intent(context, Home.class));
+            }else {
+                Settings.username = "";
+                Settings.passoword = "";
+                context.error_msg.setVisibility(View.VISIBLE);
+                context.error_msg.setText(R.string.err_login_msg);
+                context.eLogin.setText("");
+                context.ePassword.setText("");
+            }
         }
     }
 }

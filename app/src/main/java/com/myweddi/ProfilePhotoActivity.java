@@ -15,9 +15,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.myweddi.model.User;
-import com.myweddi.roles.guest.GuestHome;
+import com.myweddi.roles.Home;
 import com.myweddi.settings.Settings;
-import com.myweddi.utils.OtherUtils;
+import com.myweddi.utils.Utils;
 import com.myweddi.utils.RequestUtils;
 
 import org.springframework.http.HttpEntity;
@@ -54,12 +54,15 @@ public class ProfilePhotoActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == CAMERA_SRC){
-            profilePhoto = (Bitmap) data.getExtras().get("data");
-            new ProfilePhotoAsync().execute();
+            if(data != null) {
+                profilePhoto = (Bitmap) data.getExtras().get("data");
+                new ProfilePhotoAsync().execute();
+            }
         }
 
-//        finish();
-//        startActivity(new Intent(ProfilePhotoActivity.this, GuestHome.class));
+
+        finish();
+        startActivity(new Intent(ProfilePhotoActivity.this, Home.class));
     }
 
     class ProfilePhotoAsync extends AsyncTask<Void, Void, Void> {
@@ -86,7 +89,7 @@ public class ProfilePhotoActivity extends AppCompatActivity {
             Settings.user = user;
             if(user.getWebAppPath() != null){
                 String fullPath = Settings.server_url + user.getWebAppPath();
-                Settings.profilePhotoBitmap = OtherUtils.getBitmapFromURL(fullPath);
+                Settings.profilePhotoBitmap = Utils.getBitmapFromURL(fullPath);
             }
             
             return null;
@@ -94,8 +97,8 @@ public class ProfilePhotoActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void voids) {
-            finish();
-            startActivity(new Intent(ProfilePhotoActivity.this, GuestHome.class));
+//            finish();
+//            startActivity(new Intent(ProfilePhotoActivity.this, Home.class));
         }
     }
 }

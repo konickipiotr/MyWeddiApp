@@ -1,17 +1,11 @@
-package com.myweddi.roles.guest;
+package com.myweddi.roles;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,18 +15,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.bumptech.glide.Glide;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.myweddi.MainActivity;
-import com.myweddi.ProfilePhotoActivity;
 import com.myweddi.R;
 import com.myweddi.model.ListWrapper;
 import com.myweddi.settings.Settings;
 import com.myweddi.module.createpost.CreatePost;
 import com.myweddi.module.showpost.PostListAdapter;
 import com.myweddi.utils.MenuHandler;
-import com.myweddi.utils.OtherUtils;
+import com.myweddi.utils.Utils;
 import com.myweddi.utils.RequestUtils;
 import com.myweddi.module.showpost.view.PostView;
 
@@ -45,7 +36,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuestHome extends AppCompatActivity {
+public class Home extends AppCompatActivity {
 
     ListView listView;
     Button bAddPost;
@@ -65,14 +56,7 @@ public class GuestHome extends AppCompatActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 
-        OtherUtils.setProfilePhoto(myProfilPhoto, this, GuestHome.this);
-//        myProfilPhoto = (ImageView) findViewById(R.id.myprofilphoto);
-//        Glide.with(this)
-//                .load(Settings.profilePhotoBitmap)
-//                .circleCrop()
-//                .into(myProfilPhoto);
-
-
+        Utils.setProfilePhoto(myProfilPhoto, this, Home.this);
 
         bAddPost = (Button) findViewById(R.id.bAddPostg);
         addComment = (ImageButton) findViewById(R.id.addComment);
@@ -82,29 +66,13 @@ public class GuestHome extends AppCompatActivity {
         String path = Settings.server_url + "/api/post/2/1";
         lp.execute(path);
 
-//        if(ContextCompat.checkSelfPermission(GuestHome.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-//            ActivityCompat.requestPermissions(GuestHome.this, new String[]{
-//                    Manifest.permission.CAMERA
-//            }, 100);
-//        }
 
         bAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(GuestHome.this, CreatePost.class));
+                startActivity(new Intent(Home.this, CreatePost.class));
             }
         });
-
-//        myProfilPhoto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//                startActivity(new Intent(GuestHome.this, ProfilePhotoActivity.class));
-//            }
-//        });
-
-
-
     }
 
 
@@ -117,7 +85,7 @@ public class GuestHome extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        boolean menu = MenuHandler.menu(item, this, GuestHome.this);
+        boolean menu = MenuHandler.menu(item, this, Home.this);
         if(!menu)
             return super.onOptionsItemSelected(item);
         return menu;
@@ -152,7 +120,7 @@ public class GuestHome extends AppCompatActivity {
         protected void onPostExecute(List<PostView> postViews) {
             ListView listView = (ListView) findViewById(R.id.listview);
             List<String> titles = getTitles(postViews);
-            PostListAdapter postListAdapter = new PostListAdapter(GuestHome.this, postViews, titles);
+            PostListAdapter postListAdapter = new PostListAdapter(Home.this, postViews, titles);
             listView.setAdapter(postListAdapter);
         }
     }

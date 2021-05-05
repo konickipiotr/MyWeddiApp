@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".roles.host.EditInfoActivity">
+
+        <TextView
+            android:id="@+id/info_date_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="@string/info_ceremony_date" />
+
+        <EditText
+            android:id="@+id/editinfo_weddingdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:hint="dd-MM-yyyy"
+            android:inputType="date" />
+
+        <TextView
+            android:id="@+id/editinfo_weddingtime_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="@string/info_hour" />
+
+        <EditText
+            android:id="@+id/editinfo_weddingtime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:hint="HH:mm"
+            android:inputType="time" />
+
+        <TextView
+            android:id="@+id/editinfo_churchname_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="@string/info_churchname_info" />
+
+        <EditText
+            android:id="@+id/editinfo_church"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:hint="Miejsce slubu"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/info_church_address_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="@string/address" />
+
+        <EditText
+            android:id="@+id/editinfo_church_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:hint="adres"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/info_info_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="@string/info_info" />
+
+        <EditText
+            android:id="@+id/editinfo_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/editinfo_church_takephoto"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="?attr/colorPrimarySurface"
+                android:src="@android:drawable/ic_menu_camera"
+                tools:src="@android:drawable/ic_menu_camera"
+                tools:srcCompat="@android:drawable/ic_menu_camera" />
+
+            <ImageButton
+                android:id="@+id/editinfo_church_from_storage"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="?attr/colorPrimarySurface"
+                android:src="@android:drawable/ic_menu_gallery"
+                tools:srcCompat="@android:drawable/ic_menu_gallery" />
+
+            <ImageButton
+                android:id="@+id/editinfo_church_clean"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="?attr/colorPrimarySurface"
+                android:src="@android:drawable/ic_menu_delete"
+                tools:src="@android:drawable/ic_menu_delete"
+                tools:srcCompat="@android:drawable/ic_menu_delete" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/editinfo_church_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/info_weddinghousenname_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="@string/info_weddinghouse_info" />
+
+        <EditText
+            android:id="@+id/editinfo_wedding_place"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:hint="Miesce wesela"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/info_weddinghouse_address_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="@string/address" />
+
+        <EditText
+            android:id="@+id/editinfo_wedding_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:hint="adres"
+            android:inputType="textPersonName" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/editinfo_weddingplace_takephoto"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="?attr/colorPrimarySurface"
+                android:src="@android:drawable/ic_menu_camera"
+                tools:srcCompat="@android:drawable/ic_menu_camera" />
+
+            <ImageButton
+                android:id="@+id/editinfo_weddingplace_from_storage"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="?attr/colorPrimarySurface"
+                android:src="@android:drawable/ic_menu_gallery"
+                tools:srcCompat="@android:drawable/ic_menu_gallery" />
+
+            <ImageButton
+                android:id="@+id/editinfo_weddingplace_clean"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="?attr/colorPrimarySurface"
+                android:src="@android:drawable/ic_menu_delete"
+                tools:srcCompat="@android:drawable/ic_menu_delete" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/editinfo_weddingplace_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/bWeddingInfoSave"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:text="Zapisz" />
+
+            <Button
+                android:id="@+id/bWeddingInfoCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:text="Anuluj" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
