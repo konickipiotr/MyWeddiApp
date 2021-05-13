@@ -68,11 +68,12 @@ public class PostHelper {
         }
         else {
             CommentView cv = comments.get(comments.size() - 1);
+            viewHolder.lastComment.setVisibility(View.VISIBLE);
             Picasso.get().load(Settings.server_url + cv.getUserphoto()).into(viewHolder.cProfilPhoto);
             viewHolder.userCom.setText(cv.getUsername());
             viewHolder.comentData.setText(cv.getPostdatetime());
             viewHolder.commentContent.setText(cv.getContent());
-            if(cv.getUserid().equals(Settings.user.getId())){
+            if(cv.getUserid().equals(Settings.user.getId()) || Settings.user.getRole().equals("HOST")){
                 viewHolder.removeComment1.setVisibility(View.VISIBLE);
                 viewHolder.removeComment1.setOnClickListener(new CommentToRemoveListener(cv.getId(), context));
             }
@@ -80,11 +81,12 @@ public class PostHelper {
 
         if(comments.size() > 1){
             CommentView cv = comments.get(comments.size() - 2);
+            viewHolder.secondLastComment.setVisibility(View.VISIBLE);
             Picasso.get().load(Settings.server_url + cv.getUserphoto()).into(viewHolder.cProfilPhoto2);
             viewHolder.userCom2.setText(cv.getUsername());
             viewHolder.comentData2.setText(cv.getPostdatetime());
             viewHolder.commentContent2.setText(cv.getContent());
-            if(cv.getUserid().equals(Settings.user.getId())){
+            if(cv.getUserid().equals(Settings.user.getId()) || Settings.user.getRole().equals("HOST")){
                 viewHolder.removeComment2.setVisibility(View.VISIBLE);
                 viewHolder.removeComment2.setOnClickListener(new CommentToRemoveListener(cv.getId(), context));
             }

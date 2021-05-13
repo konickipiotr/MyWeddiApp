@@ -39,8 +39,7 @@ import java.util.List;
 
 public class HostTableActivity extends AppCompatActivity {
 
-    ImageView myProfilPhoto;
-    ImageView tableSchema;
+    private ImageView tableSchema;
     private Button btable_create_tables;
 
     @Override
@@ -53,17 +52,17 @@ public class HostTableActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 
-        Utils.setProfilePhoto(myProfilPhoto, this, HostTableActivity.this);
+        Utils.setProfilePhoto(this, HostTableActivity.this);
 
         btable_create_tables = findViewById(R.id.bhosttable_create_tables);
-        this.tableSchema = (ImageView) findViewById(R.id.hosttableImage);
+        this.tableSchema = findViewById(R.id.hosttableImage);
 
 //        btable_create_tables.setOnClickListener(v ->{
 //            startActivity(new Intent(HostTableActivity.this, CreateTablesActivity.class));
 //        });
 
-//        TableAsync tableAsync = new TableAsync();
-//        tableAsync.execute();
+        TableAsync tableAsync = new TableAsync();
+        tableAsync.execute();
     }
 
     @Override

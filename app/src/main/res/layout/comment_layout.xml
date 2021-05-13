@@ -28,11 +28,11 @@
             android:orientation="horizontal">
 
 
-
             <ImageView
                 android:id="@+id/c2ProfilPhoto"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="0"
                 tools:srcCompat="@android:drawable/ic_menu_camera" />
@@ -80,12 +80,13 @@
 
             <ImageButton
                 android:id="@+id/removeComment2"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_weight="0"
                 android:background="#E0DDE6"
                 android:visibility="gone"
-                app:srcCompat="@android:drawable/ic_menu_delete" />
+                app:srcCompat="@android:drawable/ic_menu_delete"
+                tools:visibility="visible" />
 
         </LinearLayout>
 

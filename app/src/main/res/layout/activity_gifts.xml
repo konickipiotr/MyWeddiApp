@@ -22,25 +22,38 @@
             android:id="@+id/git_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Strefa Prezentów" />
+            android:layout_marginBottom="10dp"
+            android:background="@color/mainColorStrong"
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="Strefa Prezentów"
+            android:textColor="@color/lightText"
+            android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/main_gift_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Głowny prezent" />
+            android:gravity="center_horizontal"
+            android:text="Głowny prezent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <LinearLayout
+            android:id="@+id/gift_main_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/giftsIco"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                tools:srcCompat="@tools:sample/avatars" />
+                app:srcCompat="@drawable/gifts"
+                tools:srcCompat="@drawable/gifts" />
 
             <ImageView
                 android:id="@+id/arrowIco2"
@@ -51,6 +64,8 @@
                 android:rotation="181"
                 android:scaleX="2"
                 android:scaleY="2"
+                android:visibility="gone"
+                app:srcCompat="?attr/actionModeCloseDrawable"
                 tools:srcCompat="?attr/actionModeCloseDrawable" />
 
             <ImageView
@@ -58,38 +73,49 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                tools:srcCompat="@tools:sample/avatars" />
+                android:visibility="gone"
+                app:srcCompat="@drawable/money"
+                tools:srcCompat="@drawable/money" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/flower_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Zamiast kwiatów" />
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:text="Zamiast kwiatów"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <LinearLayout
-            android:id="@+id/main_gift_layout"
+            android:id="@+id/small_gift_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="visible">
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <ImageView
                 android:id="@+id/flowerIco"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_gravity="center"
                 android:layout_weight="1"
+                app:srcCompat="@drawable/ic_launcher_foreground"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <ImageView
                 android:id="@+id/arrowIco"
                 android:layout_width="wrap_content"
                 android:layout_height="42dp"
-                android:layout_marginTop="40dp"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:rotation="181"
                 android:scaleX="2"
                 android:scaleY="2"
+                app:srcCompat="?attr/actionModeCloseDrawable"
                 tools:srcCompat="?attr/actionModeCloseDrawable" />
 
             <LinearLayout
@@ -98,41 +124,101 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/wine_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gift_WINE"
+                    android:visibility="gone" />
+
                 <ImageView
                     android:id="@+id/WineIco"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/wine"
+                    tools:srcCompat="@drawable/wine"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/book_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gift_BOOKS"
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/BookIco"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/books"
+                    tools:srcCompat="@drawable/books" />
+
+                <TextView
+                    android:id="@+id/potted_flower_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gift_POTTEDFLOWERS"
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/pottedFlowerIco"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/pottedflower"
+                    tools:srcCompat="@drawable/pottedflower" />
+
+                <TextView
+                    android:id="@+id/lottery_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gift_LOTTERY"
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/lotteryIco"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/lotto"
+                    tools:srcCompat="@drawable/lotto" />
+
+                <TextView
+                    android:id="@+id/fooder_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gift_FOODER"
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/fooderIco"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/fooder"
+                    tools:srcCompat="@drawable/fooder" />
+
+                <TextView
+                    android:id="@+id/charity_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gift_CHARITY"
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/charityIco"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/charity"
+                    tools:srcCompat="@drawable/charity" />
 
             </LinearLayout>
         </LinearLayout>
@@ -141,7 +227,10 @@
             android:id="@+id/giftInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Info" />
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="@color/purple_700"
+            android:textStyle="italic" />
 
         <ListView
             android:id="@+id/giftListView"

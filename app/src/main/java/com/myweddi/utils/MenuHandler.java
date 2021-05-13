@@ -10,7 +10,7 @@ import com.myweddi.R;
 import com.myweddi.roles.guest.GiftsActivity;
 import com.myweddi.roles.Home;
 import com.myweddi.roles.WeddingInfoActivity;
-import com.myweddi.roles.guest.SettingActivity;
+import com.myweddi.roles.SettingActivity;
 import com.myweddi.roles.guest.TableActivity;
 import com.myweddi.roles.host.HostGiftActivity;
 import com.myweddi.roles.host.HostTableActivity;
@@ -46,6 +46,7 @@ public class MenuHandler {
             case R.id.bLogout:
                 context.finish();
                 Settings.user = null;
+                Settings.guest = null;
                 Settings.profilePhotoBitmap = null;
                 Settings.username = null;
                 Settings.passoword = null;

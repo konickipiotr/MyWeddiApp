@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/table_main_layout"
     android:layout_width="match_parent"
@@ -34,8 +33,9 @@
     <ImageButton
         android:id="@+id/host_customgift_remove"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_weight="1"
+        android:background="@color/mainColor"
         android:src="@android:drawable/ic_menu_delete"
         tools:src="@android:drawable/ic_menu_delete"
         tools:srcCompat="@android:drawable/ic_menu_delete" />

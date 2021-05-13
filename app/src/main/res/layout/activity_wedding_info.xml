@@ -7,234 +7,214 @@
     android:layout_height="fill_parent"
     android:fillViewport="true">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".roles.WeddingInfoActivity">
+
+        <TextView
+            android:id="@+id/textheader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#C1A7B8"
+            android:text="Pobieramy się!"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/bInfo_Edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edytuj"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/hostsPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:context=".roles.WeddingInfoActivity">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textheader"
+                android:id="@+id/brideName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#C1A7B8"
-                android:text="Pobieramy się!"
+                android:layout_weight="1"
+                android:background="#935F81"
                 android:textAlignment="center"
-                android:textSize="28sp"
                 android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/bInfo_Edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Edytuj"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/hostsPhoto"
-                android:layout_width="match_parent"
-                android:layout_height="299dp"
-                tools:srcCompat="@drawable/img_20170603_123614" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/brideName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#935F81"
-                    android:textColor="@color/white"
-                    android:textAlignment="center"
-                    android:textSize="20dp"
-                    tools:text="Patrycja" />
-
-                <TextView
-                    android:id="@+id/groomName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#935F81"
-                    android:textColor="@color/white"
-                    android:textSize="20dp"
-                    android:textAlignment="center"
-                    tools:text="Piotr" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/bridePhone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#E0DDE6"
-                    android:textAlignment="center"
-                    android:textSize="20dp"
-                    android:text="733170569" />
-
-                <TextView
-                    android:id="@+id/groomPhone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#E0DDE6"
-                    android:textAlignment="center"
-                    android:textSize="20dp"
-                    tools:text="663735444" />
-            </LinearLayout>
+                android:textSize="20dp"
+                tools:text="Patrycja" />
 
             <TextView
-                android:id="@+id/churchName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <LinearLayout
+                android:id="@+id/groomName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/weddingTimeLabel"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#935F81"
-                    android:textColor="@color/white"
-                    android:textSize="20dp"
-                    android:textAlignment="center"
-                    android:text="Godzina:" />
-
-                <TextView
-                    android:id="@+id/weddingAddressLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#935F81"
-                    android:textColor="@color/white"
-                    android:textSize="20dp"
-                    android:textAlignment="center"
-                    android:text="Adres" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-
-
-                <TextView
-                    android:id="@+id/weddingTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#E0DDE6"
-                    android:textAlignment="center"
-                    android:textSize="20dp"
-                    tools:text="17:00" />
-
-                <TextView
-                    android:id="@+id/weddingAddress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#E0DDE6"
-                    android:textAlignment="center"
-                    android:textSize="20dp"
-                    tools:text="Stronie Slaskie" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/churchPhoto"
-                android:layout_width="match_parent"
-                android:layout_height="196dp"
-                tools:srcCompat="@drawable/str" />
-
-<!--            <com.google.android.gms.maps.MapView-->
-<!--                android:id="@+id/mapView"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content" />-->
-
-            <FrameLayout
-                android:id="@+id/frame_layout"
-                android:layout_width="match_parent"
-                android:layout_height="22dp" />
-
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="match_parent"
-                android:layout_height="33dp"
-                android:background="#C1A7B8"
-                android:text="Po uroczystosći zapraszamy gośći do:"
-                android:textColor="@color/white"
-                android:textSize="25dp"
-                android:textAlignment="center" />
-
-            <TextView
-                android:id="@+id/weddingHouseName"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="#935F81"
                 android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="30dp"
-
-                tools:text="HOTELU GÓRSKI PORANEK" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/partyAddressLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:background="#935F81"
-                    android:textSize="20dp"
-                    android:text="Adres:" />
-
-                <TextView
-                    android:id="@+id/partyAddress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:background="#935F81"
-                    android:textSize="20dp"
-                    tools:text="Stronie Slaskie" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/partyHousePhoto"
-                android:layout_width="match_parent"
-                android:layout_height="158dp"
-                tools:srcCompat="@drawable/por" />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:id="@+id/wedding_house_map"/>
-
-<!--            <com.google.android.gms.maps.MapView-->
-<!--                android:id="@+id/mapView2"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="13dp" />-->
-
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                tools:text="Piotr" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/bridePhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#E0DDE6"
+                android:text="733170569"
+                android:textAlignment="center"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/groomPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#E0DDE6"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                tools:text="663735444" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/weddingtime_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="#935F81"
+            android:text="@string/info_ceremony_date"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/weddingtime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E0DDE6"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:text="3434" />
+
+        <TextView
+            android:id="@+id/info_church_name_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="#935F81"
+            android:text="@string/info_churchname_info"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/info_church_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E0DDE6"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:text="3434" />
+
+        <TextView
+            android:id="@+id/info_church_address_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#935F81"
+            android:text="@string/address"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/info_church_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E0DDE6"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:text="3434" />
+
+        <ImageView
+            android:id="@+id/info_churchPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp" />
+
+        <FrameLayout
+            android:id="@+id/info_church_map_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="350dp" />
+
+        <TextView
+            android:id="@+id/info_weddinghouse_name_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="#935F81"
+            android:text="@string/info_weddinghouse_info"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/info_weddinghouse_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E0DDE6"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:text="3434" />
+
+        <TextView
+            android:id="@+id/info_weddinghouse_address_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#935F81"
+            android:text="@string/address"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/info_weddinghouse_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="#E0DDE6"
+            android:text="3434"
+            android:textAlignment="center"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/info_weddinghouse_img"
+            android:layout_width="match_parent"
+            android:layout_height="196dp" />
+
+        <FrameLayout
+            android:id="@+id/wedding_house_map_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp" />
+
+    </LinearLayout>
 </ScrollView>

@@ -1,12 +1,21 @@
 <resources>
     <string name="app_name">MyWeddi</string>
 
+    <string name="login">login/email</string>
+    <string name="password">Hasło</string>
+    <string name="singin">Zaloguj</string>
+    <string name="registration">Rejestracja</string>
+    <string name="forgotpassword">Przypomnij hasło</string>
+
     <string name="firstname">Imię</string>
     <string name="lastname">Nazwisko</string>
     <string name="email">email</string>
     <string name="phone">phone</string>
 
     <string name="err_login_msg">Błędne hasło lub login</string>
+    <string name="old_password">Stare hasło</string>
+    <string name="new_password">Nowe hasło</string>
+    <string name="new_password_again">Powtórz nowe hasło</string>
 
     <string name="reg_who_you_are">Kim jesteś?</string>
     <string name="reg_who_hosts">Państwo Młodzi</string>
@@ -27,15 +36,29 @@
     <string name="table_how_many">Ile stołów</string>
     <string name="table_table">Stół</string>
 
+    <string name="table_temp_msg">!!! Ustawienia stołów i gości dostępne obecnie tylko w wesji webowej. Zaloguj się w www.myweddi.com !!!</string>
+
 
     <string name="address">Adres</string>
     <string name="next">Dalej</string>
     <string name="save">Zapisz</string>
     <string name="add">Dodaj</string>
+    <string name="yes">Tak</string>
+    <string name="no">Nie</string>
+    <string name="change">Zmień</string>
+    <string name="commnet">Komentarz</string>
+
+
 
     <string name="reg_msg1_all_fields_required">Wszystkie pola są wymagane</string>
 
+    <string name="post_open">Rozwiń</string>
+    <string name="post_more">Więcej ...</string>
+    <string name="post_content">Treść ...</string>
+    <string name="post_create_new_header">Dodaj nowy post</string>
 
+
+    <string name="guest_gift">Gift</string>
     <string name="host_gift_main_gift">GŁÓWNY PREZENT</string>
     <string name="host_gift_small_gift">PREZENT ZAMIAST KWIATÓW (OPCIONALNIE)</string>
     <string name="host_gift_msg1">Jeśli nie satysfakcjonują cię powyższe wybory, wpisz informacjie w polu poniżej. Możesz tu umieścić wierszyk, doatkowe inforamcjie jak np: fundacja, numer konta</string>
@@ -49,4 +72,43 @@
     <string name="gift_CHARITY">Dobroczynność</string>
     <string name="gift_MONEY">Pieniądze</string>
     <string name="gift_GIFTS">Prezenty</string>
+
+
+    <string name="confirm_question">Czy potwierdzasz obecność?</string>
+    <string name="confirm_Iwill">Będę</string>
+    <string name="confirm_Iwont">Nie będę</string>
+    <string name="confirm_accompanyingperson">Będę z osobą towarzyszącą</string>
+    <string name="confirm_howManyChildren">Ile dzieci?</string>
+    <string name="confirm_beddNeeded">Potrzebuję noclegu</string>
+    <string name="confirm_howManyBed">Ile łóżek?</string>
+    <string name="confirm_start">START</string>
+    <string name="confirm_endAndLogout">Zapisz i wyloguj</string>
+    <string name="confirm_info">Niestety nie potwierdzająć swoje obecności nie możesz przejść dalej. W każdej chwili możesz sie zalogować ponownie i zmienić zdanie</string>
+
+    <string name="settings_header">Ustawienia</string>
+    <string name="settings_header_password">HASŁO</string>
+    <string name="settings_change_photo">Zmień zdjęcie</string>
+    <string name="settings_change_password">Zmień hasło</string>
+    <string name="settings_other_header">Inne</string>
+    <string name="settings_save_others">Zapisz inne</string>
+    <string name="settings_remove_account">Usuń konto</string>
+    <string name="settings_remove_wedding">Usuń konto/ślub</string>
+
+    <string name="settings_password_err_emptyfields">Pola nie mogą być puste</string>
+    <string name="settings_password_err_tooshort">Hasło musi mieć conajmniej 5 znaków</string>
+    <string name="settings_password_err_notmatch">Hasła oba nowe są różne</string>
+    <string name="settings_password_err_sameAsOld">Nowe hasło musi być inne niż stare</string>
+    <string name="settings_password_err_wrongOld">Stare hasło jest niepoprawne</string>
+    <string name="settings_password_err_oldNotCurrent">Stare hasło nie jest już aktualne</string>
+    <string name="errr_msg_something_goes_worng">Coś poszło nie tak</string>
+    <string name="settings_password_info">Hasło zostało zmienione</string>
+    <string name="settings_account_removed">Konto zostało usunięte</string>
+    <string name="settings_removed_guest_account_msg">Czy na pewno chcesz usunąć konto? Spowoduje to usunęcie wszelkich presonalnych infomacji i zdjęcia profilowego. Posty, związane z nimi zdjęcia i komentarze zostaną zachowane pod nazwą "konto usunięte" </string>
+    <string name="settings_removed_host_account_msg">Czy na pewno chcesz usunąć konto? Spowoduje to usunęcie wszelkich dane: zdjęcia, posty, komentarze, dane personalne, informacje o weselu a taże konta gośći i związane z nimi dane </string>
+
+    <string name="edit_select_from_map">Wybierz z mapy</string>
+
+    <string name="msg_saved">Zamiany zostały zapisane</string>
+    <string name="title_activity_maps">Map</string>
+
 </resources>

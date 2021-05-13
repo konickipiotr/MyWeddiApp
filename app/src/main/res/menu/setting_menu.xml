@@ -20,7 +20,8 @@
 
             <item
                 android:id="@+id/bGifts"
-                android:title="Prezenty"/>
+                android:icon="@drawable/gifts"
+                android:title="Prezenty" />
 
             <item
                 android:id="@+id/bTable"

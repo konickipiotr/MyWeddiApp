@@ -51,9 +51,9 @@ public class TableActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 
-        Utils.setProfilePhoto(myProfilPhoto, this, TableActivity.this);
+        Utils.setProfilePhoto(this, TableActivity.this);
 
-        this.tableSchema = (ImageView) findViewById(R.id.tableImage);
+        this.tableSchema = findViewById(R.id.tableImage);
 
         TableAsync tableAsync = new TableAsync();
         tableAsync.execute();
@@ -105,7 +105,7 @@ public class TableActivity extends AppCompatActivity {
                 tableSchema.setVisibility(View.GONE);
             }
 
-            ListView listView = (ListView) findViewById(R.id.tableListView);
+            ListView listView = findViewById(R.id.tableListView);
             TableListAdapter tableListAdapter = new TableListAdapter(TableActivity.this, tableWrapper.getTablePlaces(), getTitles(tableWrapper));
             listView.setAdapter(tableListAdapter);
         }

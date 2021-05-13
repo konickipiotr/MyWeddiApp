@@ -1,9 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".roles.guest.ConfirmActivity">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:fillViewport="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/confirm_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".roles.host.EditInfoActivity">
+
+        <Switch
+            android:id="@+id/confirm_isPresent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
+            android:checked="false"
+            android:showText="true"
+            android:splitTrack="true"
+            android:text="@string/confirm_question"
+            android:textOff="@string/confirm_Iwont"
+            android:textOn="@string/confirm_Iwill"
+            android:textSize="20sp" />
+
+        <Switch
+            android:id="@+id/confirm_with_compan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
+            android:checked="false"
+            android:showText="true"
+            android:splitTrack="true"
+            android:text="@string/confirm_accompanyingperson"
+            android:textOff="@string/no"
+            android:textOn="@string/yes"
+            android:textSize="20sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/confirm_children_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="40dp"
+            android:background="@color/lightBackground"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:paddingBottom="40dp"
+            android:visibility="gone"
+            tools:visibility="gone">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/confirm_howManyChildren"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/confirm_childrenNum"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/white"
+                android:ems="10"
+                android:inputType="number"
+                android:text="0"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+
+        <Switch
+            android:id="@+id/confirm_needbed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginTop="20dp"
+            android:checked="false"
+            android:showText="true"
+            android:splitTrack="true"
+            android:text="@string/confirm_beddNeeded"
+            android:textOff="@string/no"
+            android:textOn="@string/yes"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/confirm_bed_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:background="@color/lightBackground"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/confirm_howManyBed"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/confirm_bedNum"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white"
+                android:ems="10"
+                android:inputType="number"
+                android:text="0"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/confirm_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/confirm_info"
+            android:textColor="@color/teal_700" />
+
+        <Button
+            android:id="@+id/bconfirm_Start"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/confirm_start"
+            android:visibility="gone"
+            tools:visibility="gone" />
+
+        <Button
+            android:id="@+id/bconfirm_saveAndLogout"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/confirm_endAndLogout" />
+
+    </LinearLayout>
+</ScrollView>

@@ -50,23 +50,20 @@ public class GiftAdapter extends ArrayAdapter<String> {
         viewHolder.giftNr.setText(Integer.toString(position + 1));
         viewHolder.giftName.setText(gift.getName());
 
-        viewHolder.btnBookGift.setVisibility(View.GONE);
-        viewHolder.btnUnbookGift.setVisibility(View.GONE);
-        viewHolder.giftUsername.setVisibility(View.GONE);
 
         viewHolder.btnBookGift.setOnClickListener(new BookGiftListener(gift.getId(), this.context, GiftAction.BOOK));
         viewHolder.btnUnbookGift.setOnClickListener(new BookGiftListener(gift.getId(), this.context, GiftAction.UNBOOK));
 
-
-        if(gift.getUsername() == null){
-            viewHolder.btnBookGift.setVisibility(View.VISIBLE);
+        if(giftWrapper.isReservationImpossible()){
+            if(gift.getUserid() != null && gift.getUserid().equals(Settings.user.getId()))
+                viewHolder.btnUnbookGift.setVisibility(View.VISIBLE);
+            else
+                viewHolder.alreadyBooked.setVisibility(View.VISIBLE);
         }else {
-            viewHolder.giftUsername.setText(gift.getUsername());
-            viewHolder.btnUnbookGift.setVisibility(View.INVISIBLE);
-        }
-
-        if(gift.getUserid() != null && gift.getUserid().equals(Settings.user.getId())){
-            viewHolder.btnUnbookGift.setVisibility(View.VISIBLE);
+            if(gift.getUserid() == null)
+                viewHolder.btnBookGift.setVisibility(View.VISIBLE);
+            else
+                viewHolder.alreadyBooked.setVisibility(View.VISIBLE);
         }
 
         return r;
@@ -76,19 +73,17 @@ public class GiftAdapter extends ArrayAdapter<String> {
 
         TextView giftNr;
         TextView giftName;
-        TextView giftUsername;
         ImageButton btnBookGift;
         ImageButton btnUnbookGift;
+        ImageButton alreadyBooked;
 
 
         public ViewHolder(View view) {
             this.giftNr = (TextView) view.findViewById(R.id.gift_nr);
             this.giftName = (TextView) view.findViewById(R.id.gift_name);
-            this.giftUsername = (TextView) view.findViewById(R.id.gift_username);
             this.btnBookGift = (ImageButton) view.findViewById(R.id.btnBookGift);
             this.btnUnbookGift = (ImageButton) view.findViewById(R.id.btnunbookgift);
-
-
+            alreadyBooked = view.findViewById(R.id.alreadyBooked);
         }
     }
 }

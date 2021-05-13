@@ -1,7 +1,9 @@
 package com.myweddi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.myweddi.enums.GuestStatus;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Guest {
 
     private Long id;

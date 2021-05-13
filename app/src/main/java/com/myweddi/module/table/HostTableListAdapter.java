@@ -1,33 +1,22 @@
 package com.myweddi.module.table;
 
 import android.app.Activity;
-import android.provider.SyncStateContract;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.myweddi.R;
-import com.myweddi.module.table.model.DiVal;
 import com.myweddi.module.table.model.TableHelper;
 import com.myweddi.module.table.model.TablePlace;
 import com.myweddi.module.table.model.TableWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-
-import static com.myweddi.R.layout.support_simple_spinner_dropdown_item;
 
 public class HostTableListAdapter extends ArrayAdapter<String> {
     private Activity context;
@@ -67,21 +56,20 @@ public class HostTableListAdapter extends ArrayAdapter<String> {
 
         TablePlace tablePlace = tableWrapper.getTablePlaces().get(position);
 
-
-
-        List<DiVal> diValList = new ArrayList<>();
-        Long firstId = tablePlace.getUserid();
-        diValList.add(new DiVal(firstId, tablePlace.getUsername()));
+//        viewHolder.host_assignedList.setAdapter(null);
+//        List<DiVal> diValList = new ArrayList<>();
+//        Long firstId = tablePlace.getUserid();
+//        diValList.add(new DiVal(firstId, tablePlace.getUsername()));
 //        for(Map.Entry<Long, String> v : tableWrapper.getNotassigned().entrySet()) {
 //            if(v.getKey().equals(firstId))
 //                continue;
 //            diValList.add(new DiVal(v.getKey(), v.getValue()));
 //        }
 
-        viewHolder.host_assignedList.setAdapter(new ArrayAdapter<DiVal>(context, support_simple_spinner_dropdown_item, diValList));
-        viewHolder.host_assignedList.setOnItemClickListener(new TableSelectedListener(tableWrapper, tablePlace, helper , context));
-        viewHolder.tableid.setText(Integer.toString(tablePlace.getTableid()));
+//        viewHolder.host_assignedList.setAdapter(new ArrayAdapter<DiVal>(context, support_simple_spinner_dropdown_item, diValList));
+//        viewHolder.host_assignedList.setOnItemSelectedListener(new TableSelectedListener(tableWrapper, tablePlace, helper , context));
 
+        viewHolder.tableid.setText(Integer.toString(tablePlace.getTableid()));
         String username = tablePlace.getUsername();
         if(username == null || username.isEmpty()){
             viewHolder.username.setText("Brak");
@@ -96,12 +84,12 @@ public class HostTableListAdapter extends ArrayAdapter<String> {
 
         TextView tableid;
         TextView username;
-        Spinner host_assignedList;
+        //Spinner host_assignedList;
 
         public ViewHolder(View view) {
             this.tableid = (TextView) view.findViewById(R.id.tableid);
-            this.username = (TextView) view.findViewById(R.id.table_username);
-            this.host_assignedList = view.findViewById(R.id.host_assignedList);
+            this.username = (TextView) view.findViewById(R.id.host_table_username);
+            //this.host_assignedList = view.findViewById(R.id.host_assignedList);
         }
     }
 }

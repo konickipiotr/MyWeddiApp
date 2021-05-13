@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.myweddi">
+
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -11,7 +12,6 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
@@ -22,16 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyWeddi">
-        <activity android:name=".roles.host.HostGiftActivity"></activity>
-        <activity android:name=".roles.host.HostTableActivity" />
-        <activity android:name=".roles.host.CreateTablesActivity" />
-        <activity android:name=".roles.host.EditInfoActivity" />
-        <activity android:name=".module.forgotpassword.RequestNewPassActivity" />
-        <activity android:name=".module.registration.RegistrationCompleteActivity" />
-        <activity android:name=".module.registration.RegistrationActivity" />
-        <activity android:name=".ProfilePhotoActivity" />
-        <activity android:name=".roles.guest.ConfirmActivity" />
-        <activity android:name=".roles.guest.PostActivity" />
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -42,11 +33,29 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyD24zbFjX4F2uNDGxKpCTxj78uY1iMM9bk" />
+            android:value="${MAPS_API_KEY}" />
+
+        <activity
+            android:name=".utils.MapsActivity"
+            android:label="@string/title_activity_maps"></activity>
+        <activity android:name=".roles.host.HostGiftActivity" />
+        <activity android:name=".roles.host.HostTableActivity" />
+        <activity android:name=".roles.host.CreateTablesActivity" />
+        <activity android:name=".roles.host.EditInfoActivity" />
+        <activity android:name=".module.forgotpassword.RequestNewPassActivity" />
+        <activity android:name=".module.registration.RegistrationCompleteActivity" />
+        <activity android:name=".module.registration.RegistrationActivity" />
+        <activity android:name=".ProfilePhotoActivity" />
+        <activity android:name=".roles.guest.ConfirmActivity" />
+        <activity android:name=".roles.guest.PostActivity" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".roles.guest.GiftsActivity" />
         <activity android:name=".roles.guest.TableActivity" />
-        <activity android:name=".roles.guest.SettingActivity" />
+        <activity android:name=".roles.SettingActivity" />
         <activity android:name=".roles.WeddingInfoActivity" />
         <activity android:name=".module.createpost.CreatePost" />
         <activity android:name=".roles.Home" />

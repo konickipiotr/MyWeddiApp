@@ -16,18 +16,20 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.myweddi.utils.WeddiMap;
 import com.myweddi.R;
 import com.myweddi.module.weddinginfo.WeddingInfo;
 import com.myweddi.roles.WeddingInfoActivity;
 import com.myweddi.settings.Settings;
 import com.myweddi.utils.DateUtils;
+import com.myweddi.utils.MapsActivity;
 import com.myweddi.utils.RequestUtils;
 import com.myweddi.utils.Utils;
 import com.squareup.picasso.Picasso;
@@ -36,10 +38,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
@@ -50,10 +50,19 @@ public class EditInfoActivity extends AppCompatActivity {
 
     public WeddingInfo weddingInfo;
 
+    private double churchLat;
+    private double churchLong;
+    private double weddinghosueLat;
+    private double weddinghouseLong;
+
+    private WeddiMap churchMapFragment;
+    private WeddiMap weddinghouseMapFragment;
+
     private final int CAMERA_CHU_SRC = 100;
     private final int CAMERA_WEDD_SRC = 101;
     private final int STORAGE_CHU_SRC = 200;
     private final int STORAGE_WEDD_SRC = 201;
+    private final int MAP_RESULT_OK = 300;
 
     final Calendar myCalendar = Calendar.getInstance();
 
@@ -64,7 +73,7 @@ public class EditInfoActivity extends AppCompatActivity {
     private ImageButton bInfoTakeChurchPhoto, bInfoTakeWeddinghPhoto;
     private ImageButton editinfo_church_from_storage, editinfo_weddingplace_from_storage;
     private ImageButton editinfo_church_clean, editinfo_weddingplace_clean;
-    private Button bWeddingInfoSave, bWeddingInfoCancel;
+    private Button bWeddingInfoSave, bWeddingInfoCancel, select_church_coords, select_wedding_coords;
 
     private EditText editinfo_weddingdate, editinfo_weddingtime, editinfo_church, editinfo_church_address,
             editinfo_wedding_address, editinfo_wedding_place, editinfo_info;
@@ -90,6 +99,35 @@ public class EditInfoActivity extends AppCompatActivity {
         }
 
         new FetchInfoAsync(this).execute();
+    }
+
+    private void initCoords(){
+        updateChurchCoords();
+        updateWeddingHouseCoords();
+    }
+
+    private void updateChurchCoords(){
+        if(this.churchLong != 0 && this.churchLat != 0){
+            LatLng churchCoord = new LatLng(this.churchLat, this.churchLong);
+            churchMapFragment = new WeddiMap(churchCoord);
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.church_map_fragment, churchMapFragment)
+                    .commit();
+        }
+    }
+
+    private void updateWeddingHouseCoords(){
+        if(this.weddinghosueLat != 0 && this.weddinghouseLong != 0){
+            LatLng weddinghouseCoord = new LatLng(this.weddinghosueLat, this.weddinghouseLong);
+            weddinghouseMapFragment = new WeddiMap(weddinghouseCoord);
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.weddinghouse_map_fragment, weddinghouseMapFragment)
+                    .commit();
+        }
     }
 
     @Override
@@ -134,6 +172,21 @@ public class EditInfoActivity extends AppCompatActivity {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+        }else if(requestCode == MAP_RESULT_OK){
+            Bundle extras = data.getExtras();
+            double lat = (double)extras.get("lat");
+            double lng = (double)extras.get("lng");
+
+            if(extras.get("maptype").equals("CHURCH")){
+                this.churchLat = lat;
+                this.churchLong = lng;
+                updateChurchCoords();
+            }else {
+                this.weddinghosueLat = lat;
+                this.weddinghouseLong = lng;
+                updateWeddingHouseCoords();
+            }
+
         }
     }
 
@@ -158,6 +211,8 @@ public class EditInfoActivity extends AppCompatActivity {
 
         bWeddingInfoSave = findViewById(R.id.bWeddingInfoSave);
         bWeddingInfoCancel = findViewById(R.id.bWeddingInfoCancel);
+        select_church_coords = findViewById(R.id.select_church_coords);
+        select_wedding_coords  = findViewById(R.id.select_wedding_coords);
 
         churchImg.setVisibility(View.GONE);
         weddingHImg.setVisibility(View.GONE);
@@ -208,6 +263,11 @@ public class EditInfoActivity extends AppCompatActivity {
             weddingInfo.setwAddress(editinfo_wedding_address.getText().toString());
             weddingInfo.setInfo(editinfo_info.getText().toString());
 
+            weddingInfo.setChLatitude(this.churchLat);
+            weddingInfo.setChLongitude(this.churchLong);
+            weddingInfo.setwLatitude(this.weddinghosueLat);
+            weddingInfo.setwLongitude(this.churchLong);
+
             new SaveWeddingInfoAsync(EditInfoActivity.this).execute(weddingInfo);
             finish();
             startActivity(new Intent(EditInfoActivity.this, WeddingInfoActivity.class));
@@ -229,6 +289,17 @@ public class EditInfoActivity extends AppCompatActivity {
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show());
 
+        select_church_coords.setOnClickListener(v ->{
+            Intent intent = new Intent(EditInfoActivity.this, MapsActivity.class);
+            intent.putExtra("maptype", "CHURCH");
+            startActivityForResult(intent, MAP_RESULT_OK);
+        });
+
+        select_wedding_coords.setOnClickListener(v ->{
+            Intent intent = new Intent(EditInfoActivity.this, MapsActivity.class);
+            intent.putExtra("maptype", "WEDDINGHOUSE");
+            startActivityForResult(intent, MAP_RESULT_OK);
+        });
 
     }
 
@@ -274,6 +345,12 @@ public class EditInfoActivity extends AppCompatActivity {
             context.editinfo_weddingtime.setText(DateUtils.getWeddingTime(weddingInfo));
             context.editinfo_church.setText(weddingInfo.getChurchname());
             context.editinfo_church_address.setText(weddingInfo.getChurchaddress());
+
+            context.churchLat = weddingInfo.getChLatitude();
+            context.churchLong = weddingInfo.getChLongitude();
+            context.weddinghosueLat = weddingInfo.getwLatitude();
+            context.weddinghouseLong = weddingInfo.getwLongitude();
+            context.initCoords();
 
             if(weddingInfo.getwWebAppPath() != null) {
                 String path = Settings.server_url + weddingInfo.getwWebAppPath();

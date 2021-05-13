@@ -15,6 +15,15 @@
     <color name="backgroundColor">#f6e6fc</color>
 
     <color name="selectedbtnColor">#FD8D85</color>
+    <color name="lightBackg">#FBE4E2</color>
+
+    <color name="lightBackground">#FAC3D3</color>
+
+    <color name="lightText">#CDFFF7B3</color>
+
+    <color name="public_main_color">#32567C</color>
+    <color name="public_second_color">#7EA1C6</color>
+    <color name="public_light_color">#ECF5FF</color>
 
 
 </resources>

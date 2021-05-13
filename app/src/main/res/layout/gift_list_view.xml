@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/table_main_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,36 +10,59 @@
     <TextView
         android:id="@+id/gift_nr"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
+        android:gravity="fill"
         android:text="1" />
 
     <TextView
         android:id="@+id/gift_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
+        android:gravity="center"
         android:text="Auto" />
 
-    <TextView
-        android:id="@+id/gift_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Jan" />
 
     <ImageButton
         android:id="@+id/btnBookGift"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_weight="1"
-        app:srcCompat="@android:drawable/checkbox_off_background" />
+        android:adjustViewBounds="true"
+        android:alpha="1"
+        android:background="@color/white"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        app:srcCompat="@android:drawable/checkbox_off_background"
+        tools:visibility="visible" />
+
+    <ImageButton
+        android:id="@+id/alreadyBooked"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:alpha="1"
+        android:background="@color/white"
+        android:scaleType="fitCenter"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:visibility="gone"
+        app:srcCompat="@android:drawable/ic_secure"
+        tools:visibility="visible" />
 
     <ImageButton
         android:id="@+id/btnunbookgift"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_weight="1"
-        app:srcCompat="@android:drawable/checkbox_on_background" />
+        android:adjustViewBounds="true"
+        android:alpha="1"
+        android:background="@color/white"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        app:srcCompat="@android:drawable/checkbox_on_background"
+        tools:visibility="visible" />
 
 </LinearLayout>

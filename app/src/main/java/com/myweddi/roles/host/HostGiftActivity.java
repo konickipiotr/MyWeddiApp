@@ -42,7 +42,6 @@ public class HostGiftActivity extends AppCompatActivity {
     private GiftWrapper giftWrapper;
     private Map<GiftType, Boolean> gifts;
     private GiftIn giftIn = new GiftIn();
-    private ImageButton myProfilPhoto;
 
     private ImageButton bhost_gift_gifts, bhost_gift_money, bhost_gift_pottedflower, bhost_gift_fooder,
             bhost_gift_wine, bhost_gift_lottery, bhost_gift_book, bhost_gift_charity;
@@ -58,7 +57,7 @@ public class HostGiftActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 
-        Utils.setProfilePhoto(myProfilPhoto, this, HostGiftActivity.this);
+        Utils.setProfilePhoto(this, HostGiftActivity.this);
 
         init();
         initListeners();

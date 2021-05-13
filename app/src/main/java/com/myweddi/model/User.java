@@ -1,6 +1,7 @@
 package com.myweddi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.myweddi.enums.UserStatus;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
@@ -12,11 +13,13 @@ public class User {
     private String webAppPath;
     private String role;
     private Long weddingid;
+    private UserStatus userStatus;
+
 
     public User() {
     }
 
-    public User(Host host) {
+    public User(Host host, UserStatus userStatus) {
         this.id = host.getId();
         this.firstname = host.getFirstname();
         this.lastname = host.getLastname();
@@ -25,7 +28,7 @@ public class User {
         this.weddingid = this.id;
     }
 
-    public User(Guest guest) {
+    public User(Guest guest, UserStatus userStatus) {
         this.id = guest.getId();
         this.firstname = guest.getFirstname();
         this.lastname = guest.getLastname();
@@ -92,6 +95,14 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public UserStatus getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(UserStatus userStatus) {
+        this.userStatus = userStatus;
     }
 }
 

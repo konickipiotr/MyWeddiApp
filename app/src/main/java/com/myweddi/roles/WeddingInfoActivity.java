@@ -11,19 +11,21 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.myweddi.ChurchMap;
 import com.myweddi.R;
 import com.myweddi.model.Host;
 import com.myweddi.module.weddinginfo.WeddingInfo;
 import com.myweddi.roles.host.EditInfoActivity;
 import com.myweddi.settings.Settings;
+import com.myweddi.utils.DateUtils;
 import com.myweddi.utils.MenuHandler;
 import com.myweddi.utils.Utils;
 import com.myweddi.utils.RequestUtils;
+import com.myweddi.utils.WeddiMap;
 import com.squareup.picasso.Picasso;
 
 import org.springframework.http.HttpEntity;
@@ -32,12 +34,19 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.ref.WeakReference;
+
 public class WeddingInfoActivity extends AppCompatActivity {
 
-    private ImageView myProfilPhoto, hostsPhoto, churchPhoto, partyHousePhoto;
+    private ImageView hostsPhoto, churchPhoto, partyHousePhoto;
     private TextView brideName, groomName, bridePhone, groomPhone, churchName, churchAddress, weddingTime,
     partyHouseName, partyHouseAddress;
     private Button edit;
+    private FrameLayout info_church_map_fragment, wedding_house_map_fragment;
+
+    private WeddingInfo weddingInfo;
+    private WeddiMap churchMapFragment;
+    private WeddiMap weddinghouseMapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,37 +58,47 @@ public class WeddingInfoActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 
-        Utils.setProfilePhoto(myProfilPhoto, this, WeddingInfoActivity.this);
+        Utils.setProfilePhoto(this, WeddingInfoActivity.this);
         initialize();
 
         if(Settings.user.getRole().equals("HOST")) {
             edit.setVisibility(View.VISIBLE);
-            edit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(WeddingInfoActivity.this, EditInfoActivity.class));
-                }
-            });
+            edit.setOnClickListener(v -> startActivity(new Intent(WeddingInfoActivity.this, EditInfoActivity.class)));
         }
 
-        LatLng churchCoord = new LatLng(50.290992, 16.87383);
-        ChurchMap mapFragment = new ChurchMap(churchCoord);
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.frame_layout, mapFragment)
-                .commit();
-
-        LatLng sydney = new LatLng(50.2827394, 16.880499);
-        ChurchMap weddingM = new ChurchMap(sydney);
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.wedding_house_map, weddingM)
-                .commit();
-
-        WeddingInfoTasks weddingInfoTasks = new WeddingInfoTasks();
+        WeddingInfoTasks weddingInfoTasks = new WeddingInfoTasks(this);
         weddingInfoTasks.execute();
+    }
+
+    private void updateChurchCoords(){
+        if(weddingInfo == null)
+            return;
+
+        double lat = this.weddingInfo.getChLatitude();
+        double lng = this.weddingInfo.getChLongitude();
+
+        LatLng churchCoord = new LatLng(lat, lng);
+        churchMapFragment = new WeddiMap(churchCoord);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.info_church_map_fragment, churchMapFragment)
+                .commit();
+    }
+
+    private void updateWeddingHouseCoords(){
+        if(weddingInfo == null)
+            return;
+        double lat = this.weddingInfo.getwLatitude();
+        double lng = this.weddingInfo.getwLongitude();
+
+        LatLng weddinghouseCoord = new LatLng(lat, lng);
+        weddinghouseMapFragment = new WeddiMap(weddinghouseCoord);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.wedding_house_map_fragment, weddinghouseMapFragment)
+                .commit();
     }
 
     @Override
@@ -98,23 +117,33 @@ public class WeddingInfoActivity extends AppCompatActivity {
     }
 
     private void initialize() {
-        hostsPhoto = (ImageView) findViewById(R.id.hostsPhoto);
-        churchPhoto = (ImageView) findViewById(R.id.churchPhoto);
-        partyHousePhoto = (ImageView) findViewById(R.id.partyHousePhoto);
-        edit = (Button) findViewById(R.id.bInfo_Edit);
+        hostsPhoto = findViewById(R.id.hostsPhoto);
+        churchPhoto = findViewById(R.id.info_churchPhoto);
+        partyHousePhoto = findViewById(R.id.info_weddinghouse_img);
+        edit = findViewById(R.id.bInfo_Edit);
 
-        brideName = (TextView) findViewById(R.id.brideName);
-        bridePhone = (TextView) findViewById(R.id.bridePhone);
-        groomName = (TextView) findViewById(R.id.groomName);
-        groomPhone = (TextView) findViewById(R.id.groomPhone);
-        churchName = (TextView) findViewById(R.id.churchName);
-        churchAddress = (TextView) findViewById(R.id.weddingAddress);
-        weddingTime = (TextView) findViewById(R.id.weddingTime);
-        partyHouseName = (TextView) findViewById(R.id.weddingHouseName);
-        partyHouseAddress = (TextView) findViewById(R.id.partyAddress);
+        brideName = findViewById(R.id.brideName);
+        bridePhone = findViewById(R.id.bridePhone);
+        groomName = findViewById(R.id.groomName);
+        groomPhone = findViewById(R.id.groomPhone);
+        churchName = findViewById(R.id.info_church_name);
+        churchAddress = findViewById(R.id.info_church_address);
+        weddingTime = findViewById(R.id.weddingtime);
+        partyHouseName = findViewById(R.id.info_weddinghouse_name);
+        partyHouseAddress = findViewById(R.id.info_weddinghouse_address);
+        info_church_map_fragment = findViewById(R.id.info_church_map_fragment);
+        wedding_house_map_fragment =  findViewById(R.id.wedding_house_map_fragment);
     }
 
-    class WeddingInfoTasks extends AsyncTask<Void, Void, Object[]> {
+
+    private static class WeddingInfoTasks extends AsyncTask<Void, Void, Object[]> {
+
+        private final WeakReference<WeddingInfoActivity> activityReference;
+
+        public WeddingInfoTasks(WeddingInfoActivity context) {
+            this.activityReference = new WeakReference<>(context);
+        }
+
         @Override
         protected Object[] doInBackground(Void... params) {
 
@@ -125,43 +154,46 @@ public class WeddingInfoActivity extends AppCompatActivity {
             String path = Settings.server_url + "/api/weddinginfo/" + Settings.weddingid;
             ResponseEntity<WeddingInfo> response = restTemplate.exchange(path,
                     HttpMethod.GET,
-                    new HttpEntity<Object>(requestHeaders),
+                    new HttpEntity<>(requestHeaders),
                     WeddingInfo.class);
 
             WeddingInfo weddingInfo = response.getBody();
 
-
             path = Settings.server_url + "/api/user/host";
             ResponseEntity<Host> response2 = restTemplate.postForEntity(path,
-                    new HttpEntity<Long>(Settings.weddingid, requestHeaders),
+                    new HttpEntity<>(Settings.weddingid, requestHeaders),
                     Host.class);
             Host host = response2.getBody();
 
-
-            Object[] retVal = {(Object)weddingInfo, (Object)host};
-            return retVal;
+            return new Object[]{weddingInfo, host};
         }
-
 
         @Override
         protected void onPostExecute(Object[] retVal) {
             WeddingInfo weddingInfo = (WeddingInfo) retVal[0];
             Host host = (Host) retVal[1];
-            brideName.setText(host.getBrideName());
-            bridePhone.setText(host.getBridephone());
+            WeddingInfoActivity context = activityReference.get();
+            context.weddingInfo = weddingInfo;
 
-            groomName.setText(host.getGroomName());
-            groomPhone.setText(host.getGroomphone());
+            context.updateChurchCoords();
+            context.updateWeddingHouseCoords();
 
-            churchName.setText(weddingInfo.getChurchname());
-            churchAddress.setText(weddingInfo.getChurchaddress());
-            weddingTime.setText("not implemented");
+            context.brideName.setText(host.getBrideName());
+            context.bridePhone.setText(host.getBridephone());
 
-            partyHouseName.setText(weddingInfo.getWeddinghousename());
-            partyHouseAddress.setText(weddingInfo.getwAddress());
-            Picasso.get().load(Settings.server_url + weddingInfo.getChWebAppPath()).into(churchPhoto);
-            Picasso.get().load(Settings.server_url +weddingInfo.getwWebAppPath()).into(partyHousePhoto);
-            Picasso.get().load(Settings.server_url +host.getWebAppPath()).into(hostsPhoto);
+            context.groomName.setText(host.getGroomName());
+            context.groomPhone.setText(host.getGroomphone());
+
+            context.churchName.setText(weddingInfo.getChurchname());
+            context.churchAddress.setText(weddingInfo.getChurchaddress());
+            String sDate = DateUtils.getWeddingDate(weddingInfo) + " " + DateUtils.getWeddingTime(weddingInfo);
+            context.weddingTime.setText(sDate);
+
+            context.partyHouseName.setText(weddingInfo.getWeddinghousename());
+            context.partyHouseAddress.setText(weddingInfo.getwAddress());
+            Picasso.get().load(Settings.server_url + weddingInfo.getChWebAppPath()).into(context.churchPhoto);
+            Picasso.get().load(Settings.server_url +weddingInfo.getwWebAppPath()).into(context.partyHousePhoto);
+            Picasso.get().load(Settings.server_url +host.getWebAppPath()).into(context.hostsPhoto);
         }
     }
 }

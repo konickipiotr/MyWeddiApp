@@ -1,5 +1,6 @@
 package com.myweddi.module.showpost;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.myweddi.R;
+import com.myweddi.enums.PostAccess;
 import com.myweddi.model.Photo;
 import com.myweddi.module.showpost.listeners.AddCommentListener;
 import com.myweddi.module.showpost.listeners.ShowFullPostListener;
@@ -37,11 +39,13 @@ import java.util.List;
 public class PostListAdapter extends ArrayAdapter<String> {
     private Activity context;
     private List<PostView> postlist;
+    private PostAccess postAccess;
 
-    public PostListAdapter(Activity context, List<PostView> postlist, List<String> titles) {
+    public PostListAdapter(Activity context, List<PostView> postlist, List<String> titles, PostAccess postAccess) {
         super(context, R.layout.mini_post, titles);
         this.postlist = postlist;
         this.context = context;
+        this.postAccess = postAccess;
     }
 
     @NonNull
@@ -75,7 +79,7 @@ public class PostListAdapter extends ArrayAdapter<String> {
         viewHolder.commentNum.setText(Integer.toString(comments.size()));
         postHelper.setComments(comments);
 
-        viewHolder.addComment.setOnClickListener(new AddCommentListener(postView.getId(), this.context));
+        viewHolder.addComment.setOnClickListener(new AddCommentListener(postView.getId(), this.context, viewHolder.newComment));
         viewHolder.morePhoto.setOnClickListener(new ShowFullPostListener(postView.getId(), this.context));
 
         return view;
@@ -111,12 +115,16 @@ public class PostListAdapter extends ArrayAdapter<String> {
         LinearLayout lastComment;
         LinearLayout secondLastComment;
 
+        LinearLayout table_main_layout;
+
         ImageButton removeComment1;
         ImageButton removeComment2;
 
         public ViewHolder(View view) {
             this.lastComment = (LinearLayout) view.findViewById(R.id.LastComment);
             this.secondLastComment = (LinearLayout) view.findViewById(R.id.SecondLastComment);
+            this.table_main_layout = (LinearLayout) view.findViewById(R.id.table_main_layout);
+
             this.userName = (TextView) view.findViewById(R.id.userName);
             this.postdate = (TextView) view.findViewById(R.id.postdate);
             this.textContent = (TextView) view.findViewById(R.id.textContent);
@@ -147,6 +155,10 @@ public class PostListAdapter extends ArrayAdapter<String> {
 
             this.removeComment1 = (ImageButton) view.findViewById(R.id.removeComment);
             this.removeComment2 = (ImageButton) view.findViewById(R.id.removeComment2);
+
+            if(postAccess.equals(PostAccess.PUBLIC)){
+                table_main_layout.setBackgroundColor(context.getResources().getColor(R.color.public_light_color));
+            }
         }
     }
 }

@@ -1,18 +1,283 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".roles.guest.SettingActivity">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:id="@+id/settingsMainLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="setting"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:paddingBottom="50dp">
+
+        <TextView
+            android:id="@+id/settings_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@color/mainColorStrong"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="@string/settings_header"
+            android:textColor="@color/lightText"
+            android:textSize="30sp" />
+
+        <ImageView
+            android:id="@+id/settings_profile_photo"
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <Button
+            android:id="@+id/bsettings_change_photo"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/settings_change_photo" />
+
+        <LinearLayout
+            android:id="@+id/settings_password_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/lightBackground"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/settings_password_label1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/mainColorStrong"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:text="@string/settings_header_password"
+                android:textColor="@color/lightText"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/settings_info_password_msg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/settings_password_info"
+                android:textColor="@color/teal_700"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/settings_error_password_msg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="@color/design_default_color_error"
+                android:textSize="18sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/settings_password_label2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/new_password"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/settings_old_password_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:padding="5dp"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/settings_password_label3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/old_password"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/settings_new_password_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:padding="5dp"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/settings_password_label4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/new_password_again"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/settings_new2_password_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:padding="5dp"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/bSettings_change_password"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:text="@string/settings_change_password" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/settings_other_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/settings_other_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/mainColorStrong"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:text="@string/settings_other_header"
+                android:textColor="@color/lightText"
+                android:textSize="24sp" />
+
+
+            <Switch
+                android:id="@+id/settings_prestent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/confirm_question"
+                android:textOff="@string/confirm_Iwont"
+                android:textOn="@string/confirm_Iwill" />
+
+            <Switch
+                android:id="@+id/settings_compan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/confirm_accompanyingperson"
+                android:textOff="@string/no"
+                android:textOn="@string/yes"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/settings_children_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_marginBottom="40dp"
+                android:background="@color/lightBackground"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:paddingBottom="40dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/confirm_howManyChildren"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/settings_childrenNum"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/white"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:text="0"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <Switch
+                android:id="@+id/settings_needbed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:checked="false"
+                android:showText="true"
+                android:splitTrack="true"
+                android:text="@string/confirm_beddNeeded"
+                android:textOff="@string/no"
+                android:textOn="@string/yes"
+                android:textSize="20sp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/settongs_bed_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="@color/lightBackground"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/confirm_howManyBed"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/settings_bedNum"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:text="0"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/bsettings_save_other"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:text="@string/settings_save_others"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bsettings_remove_account"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/settings_remove_account"
+            android:visibility="visible" />
+
+    </LinearLayout>
+</ScrollView>

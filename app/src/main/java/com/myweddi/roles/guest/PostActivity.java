@@ -42,7 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PostActivity extends AppCompatActivity {
-    private ImageView myProfilPhoto;
+
     private ImageButton addComment, removepost, btnStar;
     private EditText newComment;
     private Long postid;
@@ -58,7 +58,7 @@ public class PostActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 
-        Utils.setProfilePhoto(myProfilPhoto, this, PostActivity.this);
+        Utils.setProfilePhoto(this, PostActivity.this);
 
         Intent intent = getIntent();
         postid = intent.getLongExtra("postid", -1);
@@ -72,11 +72,11 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void initialize(){
-        addComment = (ImageButton) findViewById(R.id.addComment);
-        newComment = (EditText) findViewById(R.id.newComment);
-        removepost = (ImageButton) findViewById(R.id.removePost3);
-        btnStar = (ImageButton) findViewById(R.id.addStar);
-        starNum = (TextView) findViewById(R.id.starNum);
+        addComment = findViewById(R.id.addComment);
+        newComment = findViewById(R.id.newComment);
+        removepost = findViewById(R.id.removePost3);
+        btnStar = findViewById(R.id.addStar);
+        starNum = findViewById(R.id.starNum);
 
     }
 
@@ -140,8 +140,8 @@ public class PostActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(PostView postView) {
 
-            ListView photoListView = (ListView) findViewById(R.id.photoListView);
-            ListView commentListView = (ListView) findViewById(R.id.commentListView);
+            ListView photoListView = findViewById(R.id.photoListView);
+            ListView commentListView = findViewById(R.id.commentListView);
             List<String> titles = getTitlesPhoto(postView);
 
             PostPhotoListView postPhotoListView = new PostPhotoListView(PostActivity.this, postView.getPhotos(), getTitlesPhoto(postView));

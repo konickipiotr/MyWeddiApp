@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.myweddi.R;
-import com.myweddi.module.createpost.CreatePost;
 
 public class PhotoToRemove implements View.OnTouchListener {
 
@@ -24,8 +23,8 @@ public class PhotoToRemove implements View.OnTouchListener {
             LinearLayout tool_bar = (LinearLayout) createPost.findViewById(R.id.tool_bar);
             tool_bar.setVisibility(View.VISIBLE);
             this.createPost.selectedPhotoIndex = idx;
-            ImageView iv = this.createPost.getPhotsList().get(idx);
-            for(ImageView i : this.createPost.getPhotsList()){
+            ImageView iv = this.createPost.getPhotosList().get(idx);
+            for(ImageView i : this.createPost.getPhotosList()){
                 i.setPadding(0,0,0,0);
                 iv.setBackgroundColor(Color.WHITE);
             }

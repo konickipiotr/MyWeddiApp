@@ -10,11 +10,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.myweddi.enums.GuestStatus;
+import com.myweddi.enums.UserStatus;
+import com.myweddi.model.Guest;
 import com.myweddi.model.User;
 import com.myweddi.module.forgotpassword.RequestNewPassActivity;
 import com.myweddi.module.registration.RegistrationActivity;
 import com.myweddi.roles.Home;
+import com.myweddi.roles.guest.ConfirmActivity;
 import com.myweddi.settings.Settings;
+import com.myweddi.utils.GetImgAsync;
 import com.myweddi.utils.Utils;
 
 import org.springframework.http.HttpAuthentication;
@@ -30,7 +35,9 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -83,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private static class LoginTask extends AsyncTask<Void, Void, User> {
+    private static class LoginTask extends AsyncTask<Void, Void, List<Object>> {
 
         private final WeakReference<MainActivity> activityReference;
 
@@ -92,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected User doInBackground(Void... params) {
+        protected List<Object> doInBackground(Void... params) {
             String path= Settings.server_url + "/api/user";
 
             HttpAuthentication authHeader = new HttpBasicAuthentication(Settings.username,Settings.passoword);
@@ -104,34 +111,52 @@ public class MainActivity extends AppCompatActivity {
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
             User user = null;
+            Guest guest = null;
+            List<Object> returnList = new ArrayList<>();
             try {
                 ResponseEntity<User> response = restTemplate.exchange(path, HttpMethod.GET, new HttpEntity<>(requestHeaders), User.class);
-                if(response.getStatusCode().equals(HttpStatus.OK)){
-                    user = response.getBody();
+                user = response.getBody();
+                returnList.add(user);
+                if(user.getRole().equals("GUEST") || user.getRole().equals("NEWGUEST")){
+
+                    path += "/guest";
+                    ResponseEntity<Guest> response2 = restTemplate.exchange(path, HttpMethod.POST, new HttpEntity<>(user.getId(), requestHeaders), Guest.class);
+                    returnList.add(response2.getBody());
                 }
+
             }catch (HttpClientErrorException e){
                 return null;
 
             }
-            return user;
+            return returnList;
         }
 
         @Override
-        protected void onPostExecute(User user) {
-            super.onPostExecute(user);
+        protected void onPostExecute(List<Object> retList) {
+            super.onPostExecute(retList);
             MainActivity context = activityReference.get();
 
-            if(user != null){
+
+            if(retList != null){
+                User user = (User) retList.get(0);
                 Settings.user = user;
                 Settings.weddingid = user.getWeddingid();
                 if(user.getWebAppPath() != null){
                     String fullPath = Settings.server_url + user.getWebAppPath();
-                    Settings.profilePhotoBitmap = Utils.getBitmapFromURL(fullPath);
-
-
+                    new GetImgAsync().execute(fullPath);
                 }
-                context.finish();
-                context.startActivity(new Intent(context, Home.class));
+
+                if(retList.size() > 1)
+                    Settings.guest = (Guest) retList.get(1);
+
+                if(Settings.guest != null && user.getUserStatus().equals(UserStatus.FIRSTLOGIN)){
+                    context.finish();
+                    context.startActivity(new Intent(context, ConfirmActivity.class));
+                }else {
+                    context.finish();
+                    context.startActivity(new Intent(context, Home.class));
+                }
+
             }else {
                 Settings.username = "";
                 Settings.passoword = "";

@@ -20,7 +20,7 @@ import java.util.TreeMap;
 
 import static com.myweddi.R.layout.support_simple_spinner_dropdown_item;
 
-public class TableSelectedListener implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
+public class TableSelectedListener implements AdapterView.OnItemSelectedListener{
 
     private TableWrapper tableWrapper;
     private TablePlace tablePlace;
@@ -41,8 +41,13 @@ public class TableSelectedListener implements AdapterView.OnItemSelectedListener
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         DiVal diVal = (DiVal) parent.getSelectedItem();
-        helper.get(position).setUserid(diVal.getId());
+        Log.i("Listener", diVal.toString());
+        tableWrapper.getTablePlaces().get(position).setUsername(diVal.getName());
+        tableWrapper.getTablePlaces().get(position).setUserid(diVal.getId());
 
+
+//        helper.get(position).setUserid(diVal.getId());
+//
         tableWrapper.getNotassigned().remove(diVal.getId());
         tableWrapper.getAssigned().put(diVal.getId(), diVal.getName());
 
@@ -74,18 +79,5 @@ public class TableSelectedListener implements AdapterView.OnItemSelectedListener
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        DiVal diVal = (DiVal) parent.getSelectedItem();
-        helper.get(position).setUserid(diVal.getId());
-
-        tableWrapper.getNotassigned().remove(diVal.getId());
-        tableWrapper.getAssigned().put(diVal.getId(), diVal.getName());
-
-
-
-        Log.i("eeee", "ff" + diVal );
     }
 }

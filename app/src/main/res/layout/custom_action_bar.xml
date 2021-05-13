@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/mainColor"
     android:orientation="horizontal"
+    android:padding="5dp"
     tools:menu="@menu/setting_menu">
 
     <ImageView
         android:id="@+id/myprofilphoto"
-        android:layout_width="73dp"
+        android:layout_width="60dp"
         android:layout_height="60dp"
         tools:srcCompat="@drawable/user" />
 
     <TextView
         android:id="@+id/apptitle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:fontFamily="@font/dancing_script_bold"
+        android:gravity="center"
         android:text="MyWeddi"
-        android:textSize="24sp"
+        android:textColor="@color/lightText"
+        android:textSize="30sp"
         tools:layout_editor_absoluteX="98dp"
         tools:layout_editor_absoluteY="12dp" />
 

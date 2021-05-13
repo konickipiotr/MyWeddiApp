@@ -1,5 +1,6 @@
 package com.myweddi.roles;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,10 +19,14 @@ import android.widget.ListView;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myweddi.R;
+import com.myweddi.enums.PostAccess;
 import com.myweddi.model.ListWrapper;
+import com.myweddi.roles.host.EditInfoActivity;
 import com.myweddi.settings.Settings;
 import com.myweddi.module.createpost.CreatePost;
 import com.myweddi.module.showpost.PostListAdapter;
+import com.myweddi.utils.ListUtils;
+import com.myweddi.utils.MapsActivity;
 import com.myweddi.utils.MenuHandler;
 import com.myweddi.utils.Utils;
 import com.myweddi.utils.RequestUtils;
@@ -38,43 +43,105 @@ import java.util.List;
 
 public class Home extends AppCompatActivity {
 
-    ListView listView;
-    Button bAddPost;
-    ImageButton addComment;
+    private ListView listView;
+    private Button bAddPost, private_posts, public_posts, more_posts;
 
-    ImageView myProfilPhoto;
-    private final int CAMERA_SRC = 100;
+    private ImageView myProfilPhoto;
+    private int pages = 1;
+    PostAccess postAccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_guest_home);
+        setContentView(R.layout.activity_home);
         setTitle("");
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 
-        Utils.setProfilePhoto(myProfilPhoto, this, Home.this);
-
-        bAddPost = (Button) findViewById(R.id.bAddPostg);
-        addComment = (ImageButton) findViewById(R.id.addComment);
-
-
-        FetchPosts lp = new FetchPosts();
-        String path = Settings.server_url + "/api/post/2/1";
-        lp.execute(path);
-
+        Utils.setProfilePhoto(this, Home.this);
+        init();
+        updateData();
 
         bAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Home.this, CreatePost.class));
+                Intent intent = new Intent(Home.this, CreatePost.class);
+                intent.putExtra("postType", postAccess.name());
+                startActivityForResult(intent, 100);
             }
         });
     }
 
+    private void updateData(){
+        String path;
+        if(this.postAccess == null || this.postAccess.equals(PostAccess.PRIVATE)) {
+            this.postAccess = PostAccess.PRIVATE;
+            path = Settings.server_url + "/api/post/" + Settings.weddingid + "/1";
+        }
+        else {
+            this.postAccess = PostAccess.PUBLIC;
+            path = Settings.server_url + "/api/post/public/1";
+        }
+
+        new FetchPosts().execute(path);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (data == null) return;
+
+        if (requestCode == 100) {
+            String postType = data.getStringExtra("postType");
+            this.postAccess = PostAccess.valueOf(postType);
+            updateData();
+        }
+    }
+
+    private void init(){
+        bAddPost = (Button) findViewById(R.id.bAddPostg);
+        private_posts = findViewById(R.id.private_posts);
+        public_posts = findViewById(R.id.public_posts);
+        more_posts = findViewById(R.id.more_posts);
+
+        if(Settings.user.getRole().equals("HOST")){
+            private_posts.setVisibility(View.VISIBLE);
+            public_posts.setVisibility(View.VISIBLE);
+
+            private_posts.setOnClickListener(v -> {
+                this.postAccess = PostAccess.PRIVATE;
+                String path = Settings.server_url + "/api/post/" + Settings.weddingid + "/1";
+                new FetchPosts().execute(path);
+            });
+
+            public_posts.setOnClickListener(v -> {
+                this.postAccess = PostAccess.PUBLIC;
+                String path = Settings.server_url + "/api/post/public/1";
+                new FetchPosts().execute(path);
+            });
+        }
+
+        more_posts.setOnClickListener(v -> {
+            pages++;
+            if(postAccess.equals(PostAccess.PRIVATE)){
+                String path = Settings.server_url + "/api/post/" + Settings.weddingid + "/" + pages;
+                new FetchPosts().execute(path);
+            }else {
+                String path = Settings.server_url + "/api/post/public/" + pages;
+                new FetchPosts().execute(path);
+            }
+        });
+    }
+
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        Utils.setProfilePhoto(this, Home.this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -120,8 +187,10 @@ public class Home extends AppCompatActivity {
         protected void onPostExecute(List<PostView> postViews) {
             ListView listView = (ListView) findViewById(R.id.listview);
             List<String> titles = getTitles(postViews);
-            PostListAdapter postListAdapter = new PostListAdapter(Home.this, postViews, titles);
+            PostListAdapter postListAdapter = new PostListAdapter(Home.this, postViews, titles, postAccess);
             listView.setAdapter(postListAdapter);
+
+            ListUtils.setDynamicHeight(listView);
         }
     }
 

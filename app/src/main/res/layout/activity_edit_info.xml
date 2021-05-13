@@ -2,7 +2,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:fillViewport="true">
 
@@ -76,13 +75,6 @@
             android:hint="adres"
             android:inputType="textPersonName" />
 
-        <TextView
-            android:id="@+id/info_info_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="@string/info_info" />
-
         <EditText
             android:id="@+id/editinfo_info"
             android:layout_width="match_parent"
@@ -91,6 +83,28 @@
             android:ems="10"
             android:gravity="start|top"
             android:inputType="textMultiLine" />
+
+        <TextView
+            android:id="@+id/info_info_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="@string/info_info" />
+
+        <Button
+            android:id="@+id/select_church_coords"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="0"
+            android:text="@string/edit_select_from_map" />
+
+        <FrameLayout
+            android:id="@+id/church_map_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_weight="0">
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -105,6 +119,7 @@
                 android:layout_margin="3dp"
                 android:layout_weight="1"
                 android:background="?attr/colorPrimarySurface"
+                android:scaleType="fitCenter"
                 android:src="@android:drawable/ic_menu_camera"
                 tools:src="@android:drawable/ic_menu_camera"
                 tools:srcCompat="@android:drawable/ic_menu_camera" />
@@ -116,6 +131,7 @@
                 android:layout_margin="3dp"
                 android:layout_weight="1"
                 android:background="?attr/colorPrimarySurface"
+                android:scaleType="fitCenter"
                 android:src="@android:drawable/ic_menu_gallery"
                 tools:srcCompat="@android:drawable/ic_menu_gallery" />
 
@@ -126,6 +142,7 @@
                 android:layout_margin="3dp"
                 android:layout_weight="1"
                 android:background="?attr/colorPrimarySurface"
+                android:scaleType="fitCenter"
                 android:src="@android:drawable/ic_menu_delete"
                 tools:src="@android:drawable/ic_menu_delete"
                 tools:srcCompat="@android:drawable/ic_menu_delete" />
@@ -183,6 +200,7 @@
                 android:layout_margin="3dp"
                 android:layout_weight="1"
                 android:background="?attr/colorPrimarySurface"
+                android:scaleType="fitCenter"
                 android:src="@android:drawable/ic_menu_camera"
                 tools:srcCompat="@android:drawable/ic_menu_camera" />
 
@@ -193,6 +211,7 @@
                 android:layout_margin="3dp"
                 android:layout_weight="1"
                 android:background="?attr/colorPrimarySurface"
+                android:scaleType="fitCenter"
                 android:src="@android:drawable/ic_menu_gallery"
                 tools:srcCompat="@android:drawable/ic_menu_gallery" />
 
@@ -203,6 +222,7 @@
                 android:layout_margin="3dp"
                 android:layout_weight="1"
                 android:background="?attr/colorPrimarySurface"
+                android:scaleType="fitCenter"
                 android:src="@android:drawable/ic_menu_delete"
                 tools:srcCompat="@android:drawable/ic_menu_delete" />
         </LinearLayout>
@@ -213,6 +233,21 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             tools:srcCompat="@tools:sample/avatars" />
+
+        <Button
+            android:id="@+id/select_wedding_coords"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="0"
+            android:text="@string/edit_select_from_map" />
+
+        <FrameLayout
+            android:id="@+id/weddinghouse_map_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_weight="0">
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -226,7 +261,7 @@
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:text="Zapisz" />
+                android:text="@string/save" />
 
             <Button
                 android:id="@+id/bWeddingInfoCancel"
@@ -234,7 +269,7 @@
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:text="Anuluj" />
+                android:text="@android:string/cancel" />
         </LinearLayout>
 
     </LinearLayout>

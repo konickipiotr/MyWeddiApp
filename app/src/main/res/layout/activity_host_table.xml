@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -16,11 +15,22 @@
         android:layout_marginBottom="10dp"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@color/mainColorStrong"
+            android:padding="10dp"
+            android:text="@string/table_temp_msg"
+            android:textColor="?android:attr/colorPressedHighlight" />
+
         <Button
             android:id="@+id/bhosttable_create_tables"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/table_create" />
+            android:text="@string/table_create"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/hosttableImage"

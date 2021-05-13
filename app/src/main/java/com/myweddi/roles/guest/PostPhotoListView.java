@@ -58,7 +58,7 @@ public class PostPhotoListView extends ArrayAdapter<String> {
         public ImageView postPhoto;
 
         public PhotoViewHolder(View view) {
-            postPhoto = (ImageView) view.findViewById(R.id.postPhoto);
+            postPhoto = view.findViewById(R.id.postPhoto);
         }
     }
 }
